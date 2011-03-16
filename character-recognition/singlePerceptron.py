@@ -1,6 +1,6 @@
 from random import random, uniform
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plot
 
 class SingleLayerPerceptron:
     """Initial test of perceptron"""
@@ -233,7 +233,7 @@ if __name__ == "__main__":
         #print "---------"
         #NOTE: Fiddle with the gain fraction
 
-        gainFraction = 0.001
+        gainFraction = 0.1
 
         percep.incrementTime()
         time = percep.getTime()
@@ -263,17 +263,17 @@ if __name__ == "__main__":
         if changed:
             colour = 1.0 - (float(step) / float(steps))
             colour = (colour, colour, colour)
-            plt.plot(xs, slope * xs + intercept, 'k', c = colour)
+            plot.plot(xs, slope * xs + intercept, 'k', c = colour)
         if desiredOut[time - 1] == 1.0:
-            plt.plot(oldInputs[0], oldInputs[1], 'ro')
+            plot.plot(oldInputs[0], oldInputs[1], 'ro')
         else:
-            plt.plot(oldInputs[0], oldInputs[1], 'bx')
+            plot.plot(oldInputs[0], oldInputs[1], 'bx')
     finTime = percep.getTime()
     finWeights = percep.getWeights(finTime)
     print "Weights(", finTime, ") =", finWeights
     slope = -finWeights[0] / finWeights[1]
     intercept = percep.getThreshold() / finWeights[1]
     xs = np.arange(-10.0, 10.5, 0.5)
-    plt.plot(xs, slope * xs + intercept, 'k', lw = 3, c = (1.0, 0.0, 0.0))
-    plt.axis([-10, 10, -10, 10])
-    plt.show()
+    plot.plot(xs, slope * xs + intercept, 'k', lw = 3, c = (1.0, 0.0, 0.0))
+    plot.axis([-10, 10, -10, 10])
+    plot.show()
