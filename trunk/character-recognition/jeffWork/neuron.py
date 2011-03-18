@@ -19,6 +19,12 @@ class Neuron:
     #Indicates how certain this neuron must be before it fires
     threshold = 0.0
 
+    #Old threshold used for momentum
+    oldThresh = 0.0
+
+    #The moment of inertia
+    moment = 0.0
+
     #The strength of connection this neuron has to it's inputs
     weights = []
 
@@ -36,7 +42,7 @@ class Neuron:
 
     #Initializes a neuron with these arguments
     #It is strongly recomended that you set tGain to zero
-    def __init__(self, numInputs, wGain, tGain):
+    def __init__(self, numInputs, wGain, tGain, moment):
         #print "Initializing neuron"
         self.numInputs = numInputs
         #print "    Number of inputs:", self.numInputs
@@ -49,6 +55,7 @@ class Neuron:
         #print "    Initial weights gain is:", self.wGain
         self.tGain = tGain
         #print "    Initial threshold gain is:", self.tGain
+        self.moment = moment
         #print "Neuron initialized"
         #print
 
@@ -73,6 +80,9 @@ class Neuron:
 
     def getThreshold(self):
         return self.threshold
+
+    def getOldThreshold(self):
+        return self.oldThresh
 
     def setWeightsGain(self, wGain):
         #print "Setting weights gain to:", wGain
@@ -100,6 +110,12 @@ class Neuron:
 
     def getLastOutput(self):
         return self.output
+
+    def setMoment(self, moment):
+        self.moment = moment
+
+    def getMoment(self):
+        return self.moment
 
     def neurate(self, inputs):
         #print "Neurating output from:", inputs
@@ -159,12 +175,13 @@ class Neuron:
         #print "    Error term is:", e
         inputs = self.inputs
         #print "    Last inputs were:", inputs
-        a = 0.0
+        a = self.moment
         #newWeights = [w + g * e * i for w, i in zip(weights, inputs)]
         newWeights = [w + g * e * i + a * m for w, i, m in zip(weights, inputs, momentum)]
         #print "    New weights are:", newWeights
         self.setWeights(newWeights)
         t = self.threshold
+        ot = self.oldThresh
         #print "    Old threshold was:", t
         g = self.tGain
         #print "    Threshold gain is:", g
@@ -173,7 +190,9 @@ class Neuron:
         #f = random()
         #print "    Gain 'input' is:", f
         #newThreshold = t + g * e * f
-        newThreshold = t + g * e
+        tMom = t - ot
+        self.oldThresh = t
+        newThreshold = t + g * e + a * tMom
         #print "    New threshold is:", newThreshold
         self.setThreshold(newThreshold)
         #print "Learning complete"
