@@ -22,21 +22,21 @@ class Perceptron:
         self.w.append([random() for i in range(len(x))]) # Step 1
         
     # Hardlimiter Function
-    def fh(self, alpha):
+    def __fh(self, alpha):
         retval = 1
         if(alpha < 0):
             retval = -1
         return retval
 
     # Step 3
-    def calculate_output(self, t):
+    def __calculate_output_yt(self, t):
         summation = 0
         for i in range(len(x)):
             summation += self.w[t][i] * self.x[i] - self.theta
-        self.y.append(self.fh(summation))
+        self.y.append(self.__fh(summation))
 
     # Step 4
-    def adapt_weights(self, t):
+    def __adapt_weights(self, t):
         weights = []
         for i in range(len(x)):
             weights.append(self.w[t][i] + self.n * (self.d[t] - self.y[t]) * self.x[i])
@@ -47,10 +47,10 @@ class Perceptron:
         self.w.append(weights)
 
 
-    def final_output(self):
+    def compute_output(self):
         for t in range(maxTime):
-            self.calculate_output(t)
-            self.adapt_weights(t)
+            self.__calculate_output_yt(t)
+            self.__adapt_weights(t)
         return self.y, self.x, self.w, self.d
 
 if __name__ == "__main__":
@@ -60,6 +60,6 @@ if __name__ == "__main__":
     d = [1]
     n = 0.15
     p = Perceptron(x, theta, maxTime, d, n)
-    y, newX, w, newD = p.final_output()
+    y, newX, w, newD = p.compute_output()
     print "y = ", y[maxTime - 1]
     print "end"
