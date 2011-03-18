@@ -1,6 +1,4 @@
 from random import random, uniform
-import numpy as np
-import matplotlib.pyplot as plot
 
 class Perceptron:
 
