@@ -19,10 +19,10 @@ class StripPer:
 
     def __init__(self):
         #print "Initializing strip perceptron"
-        self.bottomLeft = Neuron(2, 0.1, 0.0)
-        self.bottomRight = Neuron(2, 0.1, 0.0)
-        self.topLeft = Neuron(2, 0.01, 0.0)
-        self.topRight = Neuron(2, 0.01, 0.0)
+        self.bottomLeft = Neuron(2, 0.1, 0.0, 0.0)
+        self.bottomRight = Neuron(2, 0.1, 0.0, 0.0)
+        self.topLeft = Neuron(2, 0.01, 0.0, 0.0)
+        self.topRight = Neuron(2, 0.01, 0.0, 0.0)
         #print "Neurons initialized"
         #print
 
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     stripper = StripPer()
     
     setSize = 10000
-    dispEvery = 1000
+    dispEvery = 1
 
     #for i in range(trains):
     lowLimit = -10.0
@@ -111,6 +111,7 @@ if __name__ == "__main__":
     
     errors = 0.0
     acceptableError = 0.005
+    unacceptableError = 1.0
     errorRate = 1.0
    
     plot.ion()
@@ -141,24 +142,27 @@ if __name__ == "__main__":
                 bOut = [0.0, 1.0]
             if dOut != bOut:
                 errors = errors + 1.0
-                #print errorRate, "\t",dOut, "\t", bOut, "\t", aOut, "\t", x, "\t", y
             errorRate = errors / setSize
             if i % dispEvery == 0:
                 print errorRate, "\t",dOut, "\t", bOut, "\t", aOut, "\t", x, "\t", y
 
-        #leftWeights = stripper.getLeft().getWeights()
-        #leftSlope = -leftWeights[0] / leftWeights[1]
-        #leftInt = stripper.getLeft().getThreshold() / leftWeights[1]
+        leftWeights = stripper.getLeft().getWeights()
+        leftSlope = -leftWeights[0] / leftWeights[1]
+        leftInt = stripper.getLeft().getThreshold() / leftWeights[1]
      
-        #rightWeights = stripper.getRight().getWeights()
-        #rightSlope = -rightWeights[0] / rightWeights[1]
-        #rightInt = stripper.getRight().getThreshold() / rightWeights[1]
+        rightWeights = stripper.getRight().getWeights()
+        rightSlope = -rightWeights[0] / rightWeights[1]
+        rightInt = stripper.getRight().getThreshold() / rightWeights[1]
     
-        #xs = np.arange(-10.0, 10.5, 0.5)
-        #plot.plot(xs, leftSlope * xs + leftInt, '-', c = (0.5, 0.0, 0.0), alpha = 0.3)
-        #plot.plot(xs, rightSlope * xs + rightInt, '-', c = (0.0, 0.0, 0.5), alpha = 0.3)
-        #plot.axis([-10, 10, -10, 10])
-        #plot.draw()
+        xs = np.arange(-10.0, 10.5, 0.5)
+        plot.plot(xs, leftSlope * xs + leftInt, '-', c = (0.5, 0.0, 0.0), alpha = 0.1)
+        plot.plot(xs, rightSlope * xs + rightInt, '-', c = (0.0, 0.0, 0.5), alpha = 0.1)
+        plot.axis([-10, 10, -10, 10])
+        plot.draw()
+
+        if errorRate > unacceptableError:
+            print "Perceptron is diverging violently, restarting the reactor"
+            stripper = StripPer()
     
     #print "Training complete:"
     
