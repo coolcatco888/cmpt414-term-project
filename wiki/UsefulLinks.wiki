@@ -1,0 +1,14 @@
+#summary Put all project related links here
+
+= Description =
+
+Here are links to reference material that we used in order to construct our project.
+
+
+= Links =
+
+Sample C# Source Code of Simple OCR:
+<br>http://www.codeproject.com/KB/dotnet/simple_ocr.aspx
+
+Research Paper Describing Methods:
+<br>http://alumni.media.mit.edu/~faaborg/research/cornell/hci_neuralnetwork_finalPaper.pdf
