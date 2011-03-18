@@ -51,7 +51,7 @@ class Perceptron:
         for t in range(maxTime):
             self.calculate_output(t)
             self.adapt_weights(t)
-        return self.y
+        return self.y, self.x, self.w, self.d
 
 if __name__ == "__main__":
     x = [uniform(-10.0, 10.0) for i in range(1)]
@@ -60,6 +60,6 @@ if __name__ == "__main__":
     d = [1]
     n = 0.15
     p = Perceptron(x, theta, maxTime, d, n)
-    y = p.final_output()
+    y, newX, w, newD = p.final_output()
     print "y = ", y[maxTime - 1]
     print "end"
