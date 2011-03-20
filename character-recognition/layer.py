@@ -32,11 +32,19 @@ class Layer:
     def set_desired_outputs(self, d):
         self.d = d
 
-    def learn(self, x):
+    def learn(self, x, errors):
         for neuron in self.neurons:
 
             break
 
+        return
+
+    # output - list of outputs for this layer
+    def calculate_error_terms_for_top_layer(self, output):
+        return
+
+    # errors - error terms for all neurons above this layer
+    def calculate_error_terms_for_hidden_layer(self, errors):
         return
 
     def calculate(self, inputs):
