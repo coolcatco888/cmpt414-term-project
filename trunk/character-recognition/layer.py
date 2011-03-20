@@ -1,26 +1,33 @@
+from neuron import Neuron
+
 class Layer:
 
-    size = 0
-    d = []          # desired outputs
+    size = 0            # size of layer aka number of neurons in layer
+    d = []              # desired outputs
+    number_of_inputs    # number of inputs for each neuron aka size of previous
+                        # layer
 
-    nodes = []
+    neurons = []        # list of neurons in layer
 
-    def __init__(self, size):
+    def __init__(self, size, number_of_inputs):
         self.size = size
+        self.number_of_inputs = number_of_inputs
 
-    def __initialize_nodes(self):
-        # TODO: initialize nodes
+        self.__initialize_neurons()
+
+    def __initialize_neurons(self):
+        neurons = []
+        for i in range(self.size):
+            neurons.append(Neuron(self.number_of_inputs, 0.1, 0.1))
         return
 
-    def get_nodes(self):
-        return self.nodes
+    def get_neurons(self):
+        return self.neurons
 
-    def set_above_layer(self, abovelayer):
-        self.aboveLayer = abovelayer
+    def get_size(self):
+        return self.size
 
-    def set_below_layer(self, belowlayer):
-        self.belowLayer = belowlayer
-
+    # this should only be called if it is a final output layer
     def set_desired_outputs(self, d):
         self.d = d
 
@@ -28,4 +35,7 @@ class Layer:
         return
 
     def calculate(self, inputs):
+        output = []
+        for neuron in self.neurons:
+            output.append(neuron.calculate(inputs))
         return

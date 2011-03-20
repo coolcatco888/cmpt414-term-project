@@ -5,9 +5,10 @@ from layer import Layer
 
 class Network:
     n = 0               # number of inputs
-    layer_sizes = []    # a ist that specifies the size of all the
+    layer_sizes = []    # a list that specifies the size of all the
                         # intermediate layers eg. [40,40]
-                        # specifies 2 intermediate layers with 40 neurons
+                        # specifies 1 hidden layer
+                        # and 1 output layer, both with 40 neurons each
     
     max_time = 1000     # maximum number of time steps
     layers = []         # holds all of the layers
@@ -23,16 +24,11 @@ class Network:
         for i in range(number_of_layers):
             # construct bottom layer
             if i == 0:
-                # TODO: construct layers here
-                break
+                self.layers.append(Layer(100, n))
 
-            # construct top output layer
-            elif i == (number_of_layers - 1):
-                break
-
-            # construct middler layer
+            # construct hidden and output layers
             else:
-                break
+                self.layers.append(Layer(self.layer_sizes[(i - 1)], self.layers(i - 1).get_size()))
         return
 
     # Use back propagation to learn
