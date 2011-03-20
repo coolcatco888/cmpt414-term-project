@@ -12,7 +12,6 @@ class Network:
     
     max_time = 1000     # maximum number of time steps
     layers = []         # holds all of the layers
-    layer_outputs = []  # holds all layer outputs
 
     def __init__(self, n, layer_sizes):
         self.layer_sizes = layer_sizes
@@ -40,18 +39,43 @@ class Network:
         layer = self.layers[(len(self.layers) - 1)]
         layer.set_desired_outputs(d)
 
-        # calculate output
-        output = self.calculate(x)
+        # calculate outputs for each layer
+        output = []
+        layer_outputs = []
+
+        for i in range(len(self.layers)):
+            layer = layers[i]
+            output = 0
+
+            if i == 0:
+                # get outputs of first layer
+                output = layer.calculate(x)
+            else:
+                # get outputs of hidden layers and final layer
+                output = layer.calculate(output)
+
+            #save outputs of each layer
+            layer_outputs.append(output)
         
         # for each time step t
         for t in range(self.max_time):
-            for layer in self.layers:
-                # TODO: call learn function for each layer here
+
+            # this list holds all the errors for all layers above layer i
+            errors = []
+            for i in reversed(len(self.layers)):
+                layer = self.layers[i]
+
+                # if top layer calculate errors based on desired outputs
+                if i == len(self.layers) - 1:
+                    errors = layer.calculate_error_terms_for_top_layer(layer_outputs[i])
+                else:
+                    errors = layercalculate_error_terms_for_hidden_layer(errors)
+
+                layer.learn(x, errors);
                 break
 
     # calculate the final output based on an initial input set
     def calculate(self, inputs):
-        layer_outputs = []
         for i in range(len(self.layers)):
             layer = layers[i]
             output = 0
@@ -62,8 +86,5 @@ class Network:
             else:
                 # get outputs of hidden layers and final layer
                 output = layer.calculate(output)
-
-            #save outputs of each layer
-            layer_outputs.append(output)
 
         return output
