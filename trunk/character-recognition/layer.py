@@ -3,7 +3,6 @@ from neuron import Neuron
 class Layer:
 
     size = 0            # size of layer aka number of neurons in layer
-    d = []              # desired outputs
     number_of_inputs    # number of inputs for each neuron aka size of previous
                         # layer
 
@@ -28,10 +27,6 @@ class Layer:
     def get_size(self):
         return self.size
 
-    # this should only be called if it is a final output layer
-    def set_desired_outputs(self, d):
-        self.d = d
-
     def learn(self, x, errors):
         for neuron in self.neurons:
 
@@ -40,7 +35,8 @@ class Layer:
         return
 
     # output - list of outputs for this layer
-    def calculate_error_terms_for_top_layer(self, output):
+    # d - desired output if this is a top layer
+    def calculate_error_terms_for_top_layer(self, output, d):
         errors = []
         s = []
         y = output
