@@ -12,6 +12,7 @@ class Network:
     
     max_time = 1000     # maximum number of time steps
     layers = []         # holds all of the layers
+    layer_outputs = []  # holds all layer outputs
 
     def __init__(self, n, layer_sizes):
         self.layer_sizes = layer_sizes
@@ -39,9 +40,9 @@ class Network:
         layer = self.layers[(len(self.layers) - 1)]
         layer.set_desired_outputs(d)
 
-        # set x as first output
-        output = x
-
+        # calculate output
+        output = self.calculate(x)
+        
         # for each time step t
         for t in range(self.max_time):
             for layer in self.layers:
@@ -50,11 +51,19 @@ class Network:
 
     # calculate the final output based on an initial input set
     def calculate(self, inputs):
-        # set desired output for last layer
-        layer = self.layers[0]
-        output = layer.calculate(inputs)
+        layer_outputs = []
+        for i in range(len(self.layers)):
+            layer = layers[i]
+            output = 0
 
-        for layer in self.layers:
-            output = layer.calculate(output)
+            if i == 0:
+                # get outputs of first layer
+                output = layer.calculate(inputs)
+            else:
+                # get outputs of hidden layers and final layer
+                output = layer.calculate(output)
+
+            #save outputs of each layer
+            layer_outputs.append(output)
 
         return output
