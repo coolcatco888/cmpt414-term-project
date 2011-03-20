@@ -41,10 +41,19 @@ class Layer:
 
     # output - list of outputs for this layer
     def calculate_error_terms_for_top_layer(self, output):
-        return
+        errors = []
+        s = []
+        y = output
+
+        if len(output) == len(self.neurons):
+            for i in len(output):
+                s.append(y[i] * (1.0 - y[i]) * (d[i] - y[i]))
+        errors.append(s)
+        return errors
 
     # errors - error terms for all neurons above this layer
-    def calculate_error_terms_for_hidden_layer(self, errors):
+    # layers - reference to the list of layers for the network
+    def calculate_error_terms_for_hidden_layer(self, errors, layers_above):
         return
 
     def calculate(self, inputs):
