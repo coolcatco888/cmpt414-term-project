@@ -25,6 +25,10 @@ class Network:
             if i == 0:
                 # TODO: construct nodes
                 break
+            elif i == 3:
+                break
+            else
+                break
         return
 
     # Use back propagation to learn
