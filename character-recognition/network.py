@@ -59,7 +59,7 @@ class Network:
         
         # for each time step t
         for t in range(self.max_time):
-
+            layers_above = []
             # this list holds all the errors for all layers above layer i
             errors = []
             for i in reversed(len(self.layers)):
@@ -69,9 +69,10 @@ class Network:
                 if i == len(self.layers) - 1:
                     errors = layer.calculate_error_terms_for_top_layer(layer_outputs[i])
                 else:
-                    errors = layercalculate_error_terms_for_hidden_layer(errors)
+                    errors = layer.calculate_error_terms_for_hidden_layer(errors, layers_above)
 
                 layer.learn(x, errors);
+                layers_above.append(layer)
                 break
 
     # calculate the final output based on an initial input set
