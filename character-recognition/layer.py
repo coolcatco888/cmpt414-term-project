@@ -33,6 +33,10 @@ class Layer:
         self.d = d
 
     def learn(self, x):
+        for neuron in self.neurons:
+
+            break
+
         return
 
     def calculate(self, inputs):
