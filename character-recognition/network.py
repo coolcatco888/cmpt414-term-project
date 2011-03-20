@@ -10,7 +10,6 @@ class Network:
                         # specifies 1 hidden layer
                         # and 1 output layer, both with 40 neurons each
     
-    max_time = 1000     # maximum number of time steps
     layers = []         # holds all of the layers
 
     def __init__(self, n, layer_sizes):
@@ -35,10 +34,6 @@ class Network:
     # x - n inputs
     # d - list of desired outputs
     def learn(self, x, d):
-        # set desired output for last layer
-        layer = self.layers[(len(self.layers) - 1)]
-        layer.set_desired_outputs(d)
-
         # calculate outputs for each layer
         output = []
         layer_outputs = []
@@ -57,23 +52,23 @@ class Network:
             #save outputs of each layer
             layer_outputs.append(output)
         
-        # for each time step t
-        for t in range(self.max_time):
-            layers_above = []
-            # this list holds all the errors for all layers above layer i
-            errors = []
-            for i in reversed(len(self.layers)):
-                layer = self.layers[i]
+        layers_above_current_layer = []
 
-                # if top layer calculate errors based on desired outputs
-                if i == len(self.layers) - 1:
-                    errors = layer.calculate_error_terms_for_top_layer(layer_outputs[i])
-                else:
-                    errors = layer.calculate_error_terms_for_hidden_layer(errors, layers_above)
+        # this list holds all the errors for all layers above layer i
+        errors = []
+        for i in reversed(len(self.layers)):
+            layer = self.layers[i]
 
-                layer.learn(x, errors);
-                layers_above.append(layer)
-                break
+            # if top layer calculate errors based on desired outputs
+            if i == len(self.layers) - 1:
+                errors = layer.calculate_error_terms_for_top_layer(layer_outputs[i], d)
+            else:
+                # TODO: refactor to pass in weights
+                errors = layer.calculate_error_terms_for_hidden_layer(errors, layers_above_current_layer)
+
+            layer.learn(x, errors);
+            layers_above_current_layer.append(layer)
+            break
 
     # calculate the final output based on an initial input set
     def calculate(self, inputs):
