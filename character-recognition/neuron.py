@@ -25,7 +25,6 @@ class Neuron:
         self.threshold = random()
         self.wGain = wGain
         self.tGain = tGain
-        self.moment = moment
 
     def getNumInputs(self):
         return self.numInputs
@@ -43,6 +42,7 @@ class Neuron:
         return self.tGain
 
     def calculate(self, inputs):
+        print "Neuron", self, "calculating", inputs
         self.inputs = inputs
         if len(inputs) != len(self.weights):
             return 0.0
@@ -50,12 +50,21 @@ class Neuron:
         s = 0.0
         for i in range(self.numInputs):
             s = s + self.weights[i] * inputs[i]
-
-        return self.sigmoid(s - self.threshold)
+            print "    Running sum", s
+        
+        print "    Subtracting threshold", self.threshold
+        r = self.sigmoid(s - self.threshold)
+        print "    Sigmoid result", r
+        return r
 
     def learn(self, inputs, error):
-        self.setWeights([w + self.wGain * error * i for w, i in zip(self.weights, inputs)])
-        self.setThreshold(self.threshold - self.tGain * error)
+        print "Neuron", self, "learning for inputs", inputs, "with error", error
+        print "    Old weights were", self.weights
+        self.weights = [w + self.wGain * error * i for w, i in zip(self.weights, inputs)]
+        print "    New weights are", self.weights
+        print "    Old threshold was", self.threshold
+        self.threshold = self.threshold - self.tGain * error
+        print "    New threshold is", self.threshold
 
     def sigmoid(self, x):
-        return 1 / (1 + (e ** -a))
+        return 1 / (1 + (e ** -x))
