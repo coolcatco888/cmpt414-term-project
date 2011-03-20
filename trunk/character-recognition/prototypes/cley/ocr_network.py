@@ -1,5 +1,4 @@
 from perceptron import Perceptron
-from pythonmagick import Image
 
 
 __author__="cley"

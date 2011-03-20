@@ -1,16 +1,12 @@
 class Layer:
 
-    aboveLayer = 0
-    belowLayer = 0
+    size = 0
+    d = []          # desired outputs
 
-    inputs = []
     nodes = []
 
-    def __init__(self, aboveLayer, belowLayer, inputs = []):
-        self.aboveLayer = abovelayer
-        self.belowLayer = belowlayer
-        self.inputs
-        return
+    def __init__(self, size):
+        self.size = size
 
     def __initialize_nodes(self):
         # TODO: initialize nodes
@@ -25,8 +21,11 @@ class Layer:
     def set_below_layer(self, belowlayer):
         self.belowLayer = belowlayer
 
-    def learn(self):
+    def set_desired_outputs(self, d):
+        self.d = d
+
+    def learn(self, x):
         return
 
-    def calculate(self, inputs, t, j):
+    def calculate(self, inputs):
         return
