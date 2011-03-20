@@ -9,21 +9,30 @@ class Perceptron:
     y = []              # outputs
     d = []              # desired outputs
     n = 0.1             # gain factor
+    function = 1        # 0 for hard limiter and 1 for sigmoid
 
     # Steps 1 and 2
-    def __init__(self, x, theta, maxTime, d, n):
+    def __init__(self, x, theta, maxTime, d, n, function = 1):
         self.x = x
         self.theta = theta
         self.maxTime = maxTime
         self.d = d # Step 2
         self.n = n
+        self.function = function
         self.w.append([random() for i in range(len(x))]) # Step 1
         
     # Hardlimiter Function
     def __fh(self, alpha):
         retval = 1
-        if(alpha < 0):
-            retval = -1
+
+        # Hardlimiter function
+        if (self.function == 0):
+            if(alpha < 0):
+                retval = -1
+        # Sigmoid function
+        else:
+            retval = 1 / (1 + e ** -(alpha - self.theta))
+                
         return retval
 
     # Step 3
@@ -52,6 +61,7 @@ class Perceptron:
         return self.y, self.x, self.w, self.d
 
 if __name__ == "__main__":
+
     x = [uniform(-10.0, 10.0) for i in range(1)]
     theta = 0.1
     maxTime = 100
