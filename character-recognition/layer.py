@@ -18,6 +18,7 @@ class Layer:
     def __initialize_neurons(self):
         neurons = []
         for i in range(self.size):
+            # TODO: hard-coded weight and threshold gains to 10%, need to fix
             neurons.append(Neuron(self.number_of_inputs, 0.1, 0.1))
         return
 
