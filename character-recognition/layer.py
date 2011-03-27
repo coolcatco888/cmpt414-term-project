@@ -27,17 +27,16 @@ class Layer:
     def get_size(self):
         return self.size
 
-    def learn(self, x, errors):
-        for neuron in self.neurons:
-
+    def learn(self, x, s):
+        for i in len(self.neurons):
+            neuron = self.neurons[i]
+            neuron.learn(x, s[i])
             break
-
         return
 
     # output - list of outputs for this layer
     # d - desired output if this is a top layer
     def calculate_error_terms_for_top_layer(self, output, d):
-        errors = [] #TODO: This may need to be removed as it is not needed anymore
         weights = []
         s = []
         y = output
@@ -50,12 +49,11 @@ class Layer:
                 #store weights in layer
                 weights.append(self.neurons[i].getWeights());
 
-        errors.append(s)
-        return [errors, s, weights]
+        return [s, weights]
 
     # errors - error terms for all neurons above this layer
     # layers - reference to the list of layers for the network
-    def calculate_error_terms_for_hidden_layer(self, errors, weights_times_error_sum, x):
+    def calculate_error_terms_for_hidden_layer(self, weights_times_error_sum, x):
         weights = []
         s = []
 
@@ -67,9 +65,7 @@ class Layer:
                 #store weights in layer
                 weights.append(self.neurons[i].getWeights());
 
-
-        errors.append(s)
-        return [errors, s, weights]
+        return [s, weights]
 
     def calculate(self, inputs):
         output = []
