@@ -54,35 +54,36 @@ class Network:
         
         layers_above_current_layer = []
 
-        # this list holds all the errors for all layers above layer i
-        errors = []
 
-        # Step 3 in notes sigma[Sk * Wjk]
+        # Step 3 in notes sigma[Sk * Wjk] <- this is the sum of weights * error
         weights_times_error_sum = 0;
         for i in reversed(len(self.layers)):
             layer = self.layers[i]
-            s = [] #error terms for current layer
-            w = [] #a list weights for each node in the current layer
+            s = [] # error terms for current layer
+            w = [] # a list weights for each node in the current layer
 
             # if top layer calculate errors based on desired outputs
             if i == len(self.layers) - 1:
-                [errors, s, w] = layer.calculate_error_terms_for_top_layer(layer_outputs[i], d)
+                [s, w] = layer.calculate_error_terms_for_top_layer(layer_outputs[i], d)
             else:
-                inputs = []
-                if i > 0:
-                    inputs = layer_outputs[i]
-                else:
-                    inputs = x
-                # TODO: refactor to pass in weights
-                [errors, s, w] = layer.calculate_error_terms_for_hidden_layer(errors, weights_times_error_sum, inputs)
+                [s, w] = layer.calculate_error_terms_for_hidden_layer(weights_times_error_sum, layer_outputs[i])
 
+            # calculate sigma[Sk * Wjk] in Step 3
             weights_times_error_sum += self.calculate_error_times_weights_for_layer(s, w)
 
-            layer.learn(x, errors);
+            # determine inputs for current layer
+            inputs = []
+            if i > 0:
+                inputs = layer_outputs[i - 1]
+            else:
+                inputs = x
+                
+            layer.learn(inputs, s);
             layers_above_current_layer.append(layer)
             break
 
     # calculate weights * error for this layer
+    # Step 3 in notes sigma[Sk * Wjk] <- this is the sum of weights * error
     def calculate_error_times_weights_for_layer(self, s, weights):
         sum = 0
         if len(s) == len(weights):
