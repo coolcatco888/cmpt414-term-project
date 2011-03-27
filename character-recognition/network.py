@@ -56,19 +56,40 @@ class Network:
 
         # this list holds all the errors for all layers above layer i
         errors = []
+
+        # Step 3 in notes sigma[Sk * Wjk]
+        weights_times_error_sum = 0;
         for i in reversed(len(self.layers)):
             layer = self.layers[i]
+            s = [] #error terms for current layer
+            w = [] #a list weights for each node in the current layer
 
             # if top layer calculate errors based on desired outputs
             if i == len(self.layers) - 1:
-                errors = layer.calculate_error_terms_for_top_layer(layer_outputs[i], d)
+                [errors, s, w] = layer.calculate_error_terms_for_top_layer(layer_outputs[i], d)
             else:
+                inputs = []
+                if i > 0:
+                    inputs = layer_outputs[i]
+                else:
+                    inputs = x
                 # TODO: refactor to pass in weights
-                errors = layer.calculate_error_terms_for_hidden_layer(errors, layers_above_current_layer)
+                [errors, s, w] = layer.calculate_error_terms_for_hidden_layer(errors, weights_times_error_sum, inputs)
+
+            weights_times_error_sum += self.calculate_error_times_weights_for_layer(s, w)
 
             layer.learn(x, errors);
             layers_above_current_layer.append(layer)
             break
+
+    # calculate weights * error for this layer
+    def calculate_error_times_weights_for_layer(self, s, weights):
+        sum = 0
+        if len(s) == len(weights):
+            for i in len(s):
+                for wj in weights[i]:
+                    sum += s[i] * wj
+        return sum
 
     # calculate the final output based on an initial input set
     def calculate(self, inputs):
