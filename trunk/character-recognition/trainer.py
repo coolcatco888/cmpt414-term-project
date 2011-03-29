@@ -23,7 +23,7 @@ class Trainer:
                 outputs = []
                 for i in range(len(inputs)):
                     output = net.learn(inputs[i], desired_outputs[i])
-                    outputs.append(output)
+                    outputs.append(output[len(output) - 1])
 
                 if self.__check_if_system_is_trained(outputs, desired_outputs, 0.1):
                     break
@@ -34,11 +34,11 @@ class Trainer:
         isTrained = True
 
         if len(outputs) == len(desired_outputs):
-            for i in len(outputs):
+            for i in range(len(outputs)):
                 output = outputs[i]
-                desired_output = desired_output[i]
+                desired_output = desired_outputs[i]
 
-                for j in len(output):
+                for j in range(len(output)):
                     if output[j] >= desired_output[j] + tolerance & output[j] <= desired_output[j] - tolerance:
                         isTrained = False
         else:
