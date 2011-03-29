@@ -25,11 +25,11 @@ class Network:
         for i in range(number_of_layers):
             # construct bottom layer
             if i == 0:
-                self.layers.append(Layer(8, self.n))
+                self.layers.append(Layer(self.layer_sizes[i], self.n))
 
             # construct hidden and output layers
             else:
-                self.layers.append(Layer(self.layer_sizes[i - 1], self.layers[i - 1].get_size()))
+                self.layers.append(Layer(self.layer_sizes[i], self.layers[i - 1].get_size()))
         return
 
     # Use back propagation to learn
