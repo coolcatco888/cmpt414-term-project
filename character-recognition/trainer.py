@@ -22,12 +22,12 @@ class Trainer:
                 for i in len(inputs):
                     outputs.append(self.network.learn(inputs[i], desired_outputs[i]))
 
-                if self.__check_if_system_trained(outputs, desired_outputs, 0.1):
+                if self.__check_if_system_is_trained(outputs, desired_outputs, 0.1):
                     break
                     
         return
 
-    def __check_if_system_trained(self, outputs, desired_outputs, tolerance):
+    def __check_if_system_is_trained(self, outputs, desired_outputs, tolerance):
         isTrained = true
 
         if len(outputs) == len(desired_outputs):
