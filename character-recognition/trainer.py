@@ -1,4 +1,5 @@
 from network import Network
+from training_data import TrainingData
 
 __author__="cley"
 __date__ ="$Mar 28, 2011 11:42:30 AM$"
@@ -14,13 +15,15 @@ class Trainer:
         self.network = Network(4,[6, 4])
 
     def train(self):
+        net = self.network
         [inputs, desired_outputs] = self.training_data.get_data()
         
         if len(inputs) == len(desired_outputs):
             for t in range(self.max_steps):
                 outputs = []
-                for i in len(inputs):
-                    outputs.append(self.network.learn(inputs[i], desired_outputs[i]))
+                for i in range(len(inputs)):
+                    output = net.learn(inputs[i], desired_outputs[i])
+                    outputs.append(output)
 
                 if self.__check_if_system_is_trained(outputs, desired_outputs, 0.1):
                     break
@@ -28,7 +31,7 @@ class Trainer:
         return
 
     def __check_if_system_is_trained(self, outputs, desired_outputs, tolerance):
-        isTrained = true
+        isTrained = True
 
         if len(outputs) == len(desired_outputs):
             for i in len(outputs):
@@ -37,9 +40,9 @@ class Trainer:
 
                 for j in len(output):
                     if output[j] >= desired_output[j] + tolerance & output[j] <= desired_output[j] - tolerance:
-                        isTrained = false
+                        isTrained = False
         else:
-            isTrained = false
+            isTrained = False
             
         return isTrained
 
@@ -47,4 +50,18 @@ class Trainer:
         return self.network.calculate(inputs)
 
 if __name__ == "__main__":
-    print "Hello World"
+    training_data = TrainingData()
+    training_data.add_dataset([1, 0, 0, 0], [1, 0, 0, 0])
+    training_data.add_dataset([1, 1, 0, 0], [0, 1, 0, 0])
+    training_data.add_dataset([1, 1, 1, 0], [0, 0, 1, 0])
+    training_data.add_dataset([1, 1, 1, 1], [0, 0, 0, 1])
+
+    trainer = Trainer(training_data)
+
+    print "------[Training]-------------"
+    trainer.train()
+
+    print "------[Test]-------------"
+    print trainer.test([1, 1, 1, 0])
+
+

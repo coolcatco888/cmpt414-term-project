@@ -2,11 +2,11 @@ from neuron import Neuron
 
 class Layer:
 
-    size = 0            # size of layer aka number of neurons in layer
-    number_of_inputs    # number of inputs for each neuron aka size of previous
-                        # layer
+    size = 0                    # size of layer aka number of neurons in layer
+    number_of_inputs = 100      # number of inputs for each neuron aka size of previous
+                                # layer
 
-    neurons = []        # list of neurons in layer
+    neurons = []                # list of neurons in layer
 
     def __init__(self, size, number_of_inputs):
         self.size = size
@@ -28,7 +28,7 @@ class Layer:
         return self.size
 
     def learn(self, x, s):
-        for i in len(self.neurons):
+        for i in range(len(self.neurons)):
             neuron = self.neurons[i]
             neuron.learn(x, s[i])
             break
@@ -41,13 +41,13 @@ class Layer:
         s = []
         y = output
 
-        if len(output) == len(self.neurons):
-            for i in len(output):
-                # calculate error term
-                s.append(y[i] * (1.0 - y[i]) * (d[i] - y[i]))
-                
-                #store weights in layer
-                weights.append(self.neurons[i].getWeights());
+        #if len(output) == len(self.neurons):
+        for i in range(len(output)):
+            # calculate error term
+            s.append(y[i] * (1.0 - y[i]) * (d[i] - y[i]))
+
+            #store weights in layer
+            weights.append(self.neurons[i].getWeights());
 
         return [s, weights]
 
