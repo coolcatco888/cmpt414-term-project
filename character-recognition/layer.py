@@ -70,5 +70,6 @@ class Layer:
     def calculate(self, inputs):
         output = []
         for neuron in self.neurons:
-            output.append(neuron.calculate(inputs))
-        return
+            r = neuron.calculate(inputs)
+            output.append(r)
+        return output
