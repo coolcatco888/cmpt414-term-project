@@ -14,20 +14,22 @@ class Network:
 
     def __init__(self, n, layer_sizes):
         self.layer_sizes = layer_sizes
+        self.n = n
         
         #construct layers
         self.__construct_layers()
+
 
     def __construct_layers(self):
         number_of_layers = len(self.layer_sizes)
         for i in range(number_of_layers):
             # construct bottom layer
             if i == 0:
-                self.layers.append(Layer(100, n))
+                self.layers.append(Layer(8, self.n))
 
             # construct hidden and output layers
             else:
-                self.layers.append(Layer(self.layer_sizes[i - 1], self.layers(i - 1).get_size()))
+                self.layers.append(Layer(self.layer_sizes[i - 1], self.layers[i - 1].get_size()))
         return
 
     # Use back propagation to learn
@@ -39,8 +41,7 @@ class Network:
         layer_outputs = []
 
         for i in range(len(self.layers)):
-            layer = layers[i]
-            output = 0
+            layer = self.layers[i]
 
             if i == 0:
                 # get outputs of first layer
@@ -52,12 +53,10 @@ class Network:
             #save outputs of each layer
             layer_outputs.append(output)
         
-        layers_above_current_layer = []
-
 
         # Step 3 in notes sigma[Sk * Wjk] <- this is the sum of weights * error
         weights_times_error_sum = 0;
-        for i in reversed(len(self.layers)):
+        for i in reversed(range(len(self.layers))):
             layer = self.layers[i]
             s = [] # error terms for current layer
             w = [] # a list weights for each node in the current layer
@@ -77,9 +76,8 @@ class Network:
                 inputs = layer_outputs[i - 1]
             else:
                 inputs = x
-                
+
             layer.learn(inputs, s);
-            layers_above_current_layer.append(layer)
             break
 
         return output
