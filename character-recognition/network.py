@@ -80,14 +80,14 @@ class Network:
             layer.learn(inputs, s);
             break
 
-        return output
+        return layer_outputs
 
     # calculate weights * error for this layer
     # Step 3 in notes sigma[Sk * Wjk] <- this is the sum of weights * error
     def calculate_error_times_weights_for_layer(self, s, weights):
         sum = 0
         if len(s) == len(weights):
-            for i in len(s):
+            for i in range(len(s)):
                 for wj in weights[i]:
                     sum += s[i] * wj
         return sum
