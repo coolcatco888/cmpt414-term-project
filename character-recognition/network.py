@@ -82,6 +82,8 @@ class Network:
             layers_above_current_layer.append(layer)
             break
 
+        return output
+
     # calculate weights * error for this layer
     # Step 3 in notes sigma[Sk * Wjk] <- this is the sum of weights * error
     def calculate_error_times_weights_for_layer(self, s, weights):
