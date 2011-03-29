@@ -39,8 +39,14 @@ class Trainer:
                 desired_output = desired_outputs[i]
 
                 for j in range(len(output)):
-                    if output[j] >= desired_output[j] + tolerance & output[j] <= desired_output[j] - tolerance:
+                    if ((output[j] >= desired_output[j] + tolerance) or (output[j] <= desired_output[j] - tolerance)):
                         isTrained = False
+
+                    if isTrained == False:
+                        break
+                        
+                if isTrained == False:
+                    break
         else:
             isTrained = False
             

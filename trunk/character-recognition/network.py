@@ -95,7 +95,7 @@ class Network:
     # calculate the final output based on an initial input set
     def calculate(self, inputs):
         for i in range(len(self.layers)):
-            layer = layers[i]
+            layer = self.layers[i]
             output = 0
 
             if i == 0:
