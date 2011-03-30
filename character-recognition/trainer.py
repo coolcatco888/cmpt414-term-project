@@ -1,3 +1,5 @@
+import trainer
+import pickle
 from network import Network
 from training_data import TrainingData
 
@@ -10,9 +12,9 @@ class Trainer:
     network = 0
     max_steps = 1000
 
-    def __init__(self, training_data):
+    def __init__(self, training_data, network):
         self.training_data = training_data
-        self.network = Network(4,[6, 4])
+        self.network = network
 
     def train(self):
         net = self.network
@@ -55,19 +57,28 @@ class Trainer:
     def test(self, inputs):
         return self.network.calculate(inputs)
 
+    def get_network(self):
+        return self.network
+
 if __name__ == "__main__":
     training_data = TrainingData()
-    training_data.add_dataset([1, 0, 0, 0], [1, 0, 0, 0])
-    training_data.add_dataset([1, 1, 0, 0], [0, 1, 0, 0])
-    training_data.add_dataset([1, 1, 1, 0], [0, 0, 1, 0])
-    training_data.add_dataset([1, 1, 1, 1], [0, 0, 0, 1])
+    training_data.add_dataset([1, 0], [1, 0])
+    training_data.add_dataset([1, 1], [0, 1])
 
-    trainer = Trainer(training_data)
+    network = 0
+    try:
+        #TODO: Make this serialize whole object
+        network = pickle.load( open( "network.net" ) )
+    except IOError:
+        network = Network(2,[4, 2])
+
+    trainer = Trainer(training_data, network)
 
     print "------[Training]-------------"
     trainer.train()
+    pickle.dump( trainer.get_network(), open( "network.net", "wb" ) )
 
     print "------[Test]-------------"
-    print trainer.test([1, 1, 1, 0])
+    print trainer.test([1, 1])
 
 
