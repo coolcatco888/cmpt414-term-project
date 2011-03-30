@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     network = 0
     try:
-        #TODO: Make this serialize whole object
+        #TODO: Make this serialize whole object so that this will work on 2nd run
         network = pickle.load( open( "network.net" ) )
     except IOError:
         network = Network(2,[4, 2])
