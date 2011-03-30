@@ -8,7 +8,7 @@ class Trainer:
 
     training_data = []
     network = 0
-    max_steps = 10000
+    max_steps = 1000
 
     def __init__(self, training_data):
         self.training_data = training_data
