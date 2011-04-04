@@ -7,6 +7,7 @@ class ocr:
 
     def __init__(self, training_images):
         self.training_images = training_images
+        
 
     def train(self):
         return
