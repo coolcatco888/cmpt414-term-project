@@ -1,7 +1,11 @@
+import training_data
 import trainer
 import pickle
 from network import Network
 from training_data import TrainingData
+from random import random, uniform, seed
+import matplotlib.pyplot as plot
+import numpy as np
 
 __author__="cley"
 __date__ ="$Mar 28, 2011 11:42:30 AM$"
@@ -78,5 +82,63 @@ class Trainer:
 
 if __name__ == "__main__":
     training_data = TrainingData()
+    network = Network(2, [2, 4], 0.1, 0.1)
+
+    class_A_desired_out = [1.0, 0.0, 0.0, 0.0]
+    class_B_desired_out = [0.0, 1.0, 0.0, 0.0]
+    class_C_desired_out = [0.0, 0.0, 1.0, 0.0]
+    class_D_desired_out = [0.0, 0.0, 0.0, 1.0]
+
+    set_size = 1000
+    test_size = 1000
+
+    for i in range(set_size):
+        x = uniform(0.0, 10.0)
+        y = uniform(0.0, 10.0)
+        training_data.add_dataset([x, y], class_A_desired_out)
+
+    for i in range(set_size):
+        x = uniform(-10.0, 0.0)
+        y = uniform(0.0, 10.0)
+        training_data.add_dataset([x, y], class_B_desired_out)
+
+    for i in range(set_size):
+        x = uniform(0.0, 10.0)
+        y = uniform(-10.0, 0.0)
+        training_data.add_dataset([x, y], class_C_desired_out)
+
+    for i in range(set_size):
+        x = uniform(-10.0, 0.0)
+        y = uniform(-10.0, 0.0)
+        training_data.add_dataset([x, y], class_D_desired_out)
+
+    # Train Network
+    trainer = Trainer(training_data, network, 0.015, 3)
+
+    for i in range(test_size):
+        x = uniform(-10.0, 10.0)
+        y = uniform(-10.0, 10.0)
+
+        out = network.calculate([x, y])
+        m = 0.0
+        mi = 0
+        for r in range(len(out)):
+            if out[r] > m:
+                m = out[r]
+                mi = r
+
+        c = (0.0, 0.0, 0.0)
+        if mi == 0:
+            c = (1.0, 0.0, 0.0)
+        if mi == 1:
+            c = (0.0, 1.0, 0.0)
+        if mi == 2:
+            c = (0.0, 0.0, 1.0)
+        if mi == 3:
+            c = (1.0, 0.6, 0.0)
+
+        plot.plot(x, y, 'o', c = c)
+    plot.axis([-10.0, 10.0, -10.0, 10.0])
+    plot.show()
     
 
