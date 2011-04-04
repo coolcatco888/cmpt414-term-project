@@ -10,11 +10,14 @@ class Trainer:
 
     training_data = []
     network = 0
-    max_steps = 1000
+    acceptable_error = 0.015
+    max_allowable_diverges = 3
 
-    def __init__(self, training_data, network):
+    def __init__(self, training_data, network, acceptable_error, max_allowable_diverges):
         self.training_data = training_data
         self.network = network
+        self.acceptable_error = acceptable_error
+        self.max_allowable_diverges = max_allowable_diverges
 
     def train(self):
         

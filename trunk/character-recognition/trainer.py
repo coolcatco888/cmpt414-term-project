@@ -10,51 +10,67 @@ class Trainer:
 
     training_data = []
     network = 0
-    max_steps = 1000
+    acceptable_error_rate = 0.015
+    max_allowable_diverges = 3
 
-    def __init__(self, training_data, network):
+    def __init__(self, training_data, network, acceptable_error_rate, max_allowable_diverges):
         self.training_data = training_data
         self.network = network
+        self.acceptable_error_rate = acceptable_error_rate
+        self.max_allowable_diverges = max_allowable_diverges
 
     def train(self):
-        net = self.network
-        [inputs, desired_outputs] = self.training_data.get_data()
-        
-        if len(inputs) == len(desired_outputs):
-            for t in range(self.max_steps):
-                outputs = []
-                for i in range(len(inputs)):
-                    output = net.learn(inputs[i], desired_outputs[i])
-                    outputs.append(output[len(output) - 1])
 
-                if self.__check_if_system_is_trained(outputs, desired_outputs, 0.1):
-                    break
-                    
+        error_rate = 1.0
+        diverge_count = 0
+        actual_outputs = []
+        binary_outputs = []
+        binary_desired_outputs = []
+
+        # get a list of input sets and their corresponding desired outputs
+        [x, d] = self.training_data.get_data()
+        number_of_tests = len(d) * len(d[0])
+
+        # Training Loop
+        while error_rate >= self.acceptable_error_rate and diverge_count < self.max_allowable_diverges:
+            
+            # For each training set calculate desired outputs
+            for input, desired_output in zip(x, d):
+                #Calculate outputs for this training set or class
+                y = self.network.calculate(input);
+                actual_outputs.append(y)
+
+                # Compute binary output for comparison
+                binary_y = [1.0 if not(out == 0.0) else 0.0 for out in y]
+                binary_outputs.append(binary_y)
+
+                # Compute binary desired output for comparison
+                binary_desired_output = [1.0 if not(out == 0.0) else 0.0 for out in desired_output]
+                binary_desired_outputs.append(binary_desired_output)
+
+                #Learn
+                self.network.learn(input, desired_output)
+
+            # Count number of errors in output
+            error_count = 0
+            for y, d in zip(binary_outputs, binary_desired_outputs):
+                if y != d:
+                    error_count = error_count + 1.0
+
+            # Calculate error rate
+            previous_error_rate = error_rate
+            error_rate = error_count / number_of_tests
+
+            
+            # Determine number of divergences
+            is_converging = False
+            if error_rate < previous_error_rate:
+                is_converging = True
+            diverge_count = 0.0 if is_converging else diverge_count + 1.0
+
         return
 
-    def __check_if_system_is_trained(self, outputs, desired_outputs, tolerance):
-        isTrained = True
-
-        if len(outputs) == len(desired_outputs):
-            for i in range(len(outputs)):
-                output = outputs[i]
-                desired_output = desired_outputs[i]
-
-                for j in range(len(output)):
-                    if ((output[j] >= desired_output[j] + tolerance) or (output[j] <= desired_output[j] - tolerance)):
-                        isTrained = False
-
-                    if isTrained == False:
-                        break
-                        
-                if isTrained == False:
-                    break
-        else:
-            isTrained = False
-            
-        return isTrained
-
-    def test(self, inputs):
+    def test(self):
         return self.network.calculate(inputs)
 
     def get_network(self):
@@ -62,23 +78,5 @@ class Trainer:
 
 if __name__ == "__main__":
     training_data = TrainingData()
-    training_data.add_dataset([1, 0], [1, 0])
-    training_data.add_dataset([1, 1], [0, 1])
-
-    network = 0
-    try:
-        #TODO: Make this serialize whole object so that this will work on 2nd run
-        network = pickle.load( open( "network.net" ) )
-    except IOError:
-        network = Network(2,[4, 2])
-
-    trainer = Trainer(training_data, network)
-
-    print "------[Training]-------------"
-    trainer.train()
-    pickle.dump( trainer.get_network(), open( "network.net", "wb" ) )
-
-    print "------[Test]-------------"
-    print trainer.test([1, 1])
-
+    
 
