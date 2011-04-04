@@ -18,3 +18,6 @@ Back Propagation:
 <br>The algorithm: http://www-speech.sri.com/people/anand/771/html/node37.html
 <br>A C++ implementation: http://www.codeproject.com/KB/recipes/BP.aspx
 <br>A matlab implementation: http://sourceforge.net/projects/trainbpelementw/
+
+Python Vision (Image Processing Library):
+<br>http://pythonvision.org/basic-tutorial
