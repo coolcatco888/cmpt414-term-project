@@ -28,7 +28,7 @@ class Trainer:
 
         # get a list of input sets and their corresponding desired outputs
         [x, d] = self.training_data.get_data()
-        number_of_tests = len(d)
+        number_of_tests = len(d) * len(d[0])
 
         # Training Loop
         while error_rate >= self.acceptable_error_rate and diverge_count < self.max_allowable_diverges:
@@ -83,7 +83,7 @@ class Trainer:
 
 if __name__ == "__main__":
     training_data = TrainingData()
-    network = Network(2, [2, 4], 0.1, 0.1)
+    network = Network(2, [2,2, 4], 0.1, 0.1)
 
     class_A_desired_out = [1.0, 0.0, 0.0, 0.0]
     class_B_desired_out = [0.0, 1.0, 0.0, 0.0]
@@ -114,7 +114,7 @@ if __name__ == "__main__":
         training_data.add_dataset([x, y], class_D_desired_out)
 
     # Train Network
-    trainer = Trainer(training_data, network, 0.015, 3)
+    trainer = Trainer(training_data, network, 0.015, 30)
     trainer.train()
 
     for i in range(test_size):
