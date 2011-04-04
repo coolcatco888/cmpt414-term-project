@@ -14,7 +14,7 @@ Research Paper Describing Methods:
 <br>http://alumni.media.mit.edu/~faaborg/research/cornell/hci_neuralnetwork_finalPaper.pdf
 
 Back Propagation:
-An example: http://galaxy.agh.edu.pl/~vlsi/AI/backp_t_en/backprop.html
-The algorithm: http://www-speech.sri.com/people/anand/771/html/node37.html
-A C++ implementation: http://www.codeproject.com/KB/recipes/BP.aspx
-A matlab implementation: http://sourceforge.net/projects/trainbpelementw/
+<br>An example: http://galaxy.agh.edu.pl/~vlsi/AI/backp_t_en/backprop.html
+<br>The algorithm: http://www-speech.sri.com/people/anand/771/html/node37.html
+<br>A C++ implementation: http://www.codeproject.com/KB/recipes/BP.aspx
+<br>A matlab implementation: http://sourceforge.net/projects/trainbpelementw/
