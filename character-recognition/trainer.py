@@ -1,11 +1,9 @@
-import training_data
-import trainer
-import pickle
 from network import Network
 from training_data import TrainingData
-from random import random, uniform, seed
+
+from random import uniform
 import matplotlib.pyplot as plot
-import numpy as np
+
 
 __author__="cley"
 __date__ ="$Mar 28, 2011 11:42:30 AM$"
