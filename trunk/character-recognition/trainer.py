@@ -41,7 +41,16 @@ class Trainer:
                 y = self.network.calculate(input);
 
                 # Compute binary output for comparison
-                binary_y = [1.0 if (out > 0.0) else 0.0 for out in y]
+                binary_y = [0.0 for out in y]
+                max_y = 0.0;
+                index_of_max_y = 0
+                for i in range(len(y)):
+                    out = y[i]
+                    if out > max_y:
+                        max_y = out
+                        index_of_max_y = i
+                binary_y[index_of_max_y] = 1.0
+
 
                 # Compute binary desired output for comparison
                 binary_desired_output = [1.0 if (out > 0.0) else 0.0 for out in desired_output]
