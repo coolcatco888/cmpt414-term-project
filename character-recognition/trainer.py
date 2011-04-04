@@ -27,50 +27,44 @@ class Trainer:
 
         error_rate = 1.0
         diverge_count = 0
-        actual_outputs = []
-        binary_outputs = []
-        binary_desired_outputs = []
 
         # get a list of input sets and their corresponding desired outputs
         [x, d] = self.training_data.get_data()
-        number_of_tests = len(d) * len(d[0])
+        number_of_tests = len(d)
 
         # Training Loop
         while error_rate >= self.acceptable_error_rate and diverge_count < self.max_allowable_diverges:
-            
+            error_count = 0
             # For each training set calculate desired outputs
-            for input, desired_output in zip(x, d):
+            for desired_output, input in zip(d, x):
                 #Calculate outputs for this training set or class
                 y = self.network.calculate(input);
-                actual_outputs.append(y)
 
                 # Compute binary output for comparison
-                binary_y = [1.0 if not(out == 0.0) else 0.0 for out in y]
-                binary_outputs.append(binary_y)
+                binary_y = [1.0 if (out > 0.0) else 0.0 for out in y]
 
                 # Compute binary desired output for comparison
-                binary_desired_output = [1.0 if not(out == 0.0) else 0.0 for out in desired_output]
-                binary_desired_outputs.append(binary_desired_output)
+                binary_desired_output = [1.0 if (out > 0.0) else 0.0 for out in desired_output]
 
                 #Learn
                 self.network.learn(input, desired_output)
 
-            # Count number of errors in output
-            error_count = 0
-            for y, d in zip(binary_outputs, binary_desired_outputs):
-                if y != d:
-                    error_count = error_count + 1.0
+                # Count number of errors in output
+                for y, desired in zip(binary_y, binary_desired_output):
+                    if y != desired:
+                        error_count = error_count + 1.0
 
             # Calculate error rate
             previous_error_rate = error_rate
             error_rate = error_count / number_of_tests
 
-            
             # Determine number of divergences
             is_converging = False
             if error_rate < previous_error_rate:
                 is_converging = True
             diverge_count = 0.0 if is_converging else diverge_count + 1.0
+
+            print error_rate, "\t", previous_error_rate, "\t", is_converging
 
         return
 
@@ -97,23 +91,24 @@ if __name__ == "__main__":
         y = uniform(0.0, 10.0)
         training_data.add_dataset([x, y], class_A_desired_out)
 
-    for i in range(set_size):
+
         x = uniform(-10.0, 0.0)
         y = uniform(0.0, 10.0)
         training_data.add_dataset([x, y], class_B_desired_out)
 
-    for i in range(set_size):
+
         x = uniform(0.0, 10.0)
         y = uniform(-10.0, 0.0)
         training_data.add_dataset([x, y], class_C_desired_out)
 
-    for i in range(set_size):
+
         x = uniform(-10.0, 0.0)
         y = uniform(-10.0, 0.0)
         training_data.add_dataset([x, y], class_D_desired_out)
 
     # Train Network
     trainer = Trainer(training_data, network, 0.015, 3)
+    trainer.train()
 
     for i in range(test_size):
         x = uniform(-10.0, 10.0)
