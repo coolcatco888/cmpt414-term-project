@@ -26,7 +26,6 @@ class Network:
             lastS = s
 
     def learn(self, inputs, desired):
-        #print "Training inputs", inputs, "for desired", desired
         if len(inputs) != self.numInputs:
             print "Number of inputs does not match network"
             return 
@@ -43,49 +42,27 @@ class Network:
             else:
                 x = outputs[-1]
             outputs.append(l.calculate(x))
-
-        #print "Intermediate outputs", outputs
         
         error = []
         for i in range(len(self.layers) - 1, -1, -1):
-            #print "  Attempting to find error for layer", i, "with numbers", self.layers[i].display()
             if i == len(self.layers) - 1:
-                #print "  Calculating output error term using outputs", outputs[-1], "and desired", desired
                 error.insert(0, [a * (1.0 - a) * (d - a) for a, d in zip(outputs[-1], desired)])
-                #print "  Found error", error
             else:
-                #print "  Calculating hidden error term"
                 nW = self.layers[i + 1].getNeuronWeights()
-                #print "  Neuron weights from layer", i + 1, nW
                 r = []
                 for j in range(self.layers[i].getSize()):
-                    #print "    Finding error for", j, "neuron in layer", i
                     t = 0.0
                     for k in range(self.layers[i + 1].getSize()):
-                        #print "      Error for layer", i + 1, "neuron", k, "is", error[0][k]
-                        #print "      Weight for layer", i + 1, "neuron", k, "to this is", nW[k][j]
                         t = t + nW[k][j] * error[0][k]
-                    #print "    Found sum is", t
-                    o = outputs[i][j]
-                    #print "    Output for this node is", o
-                    e = o * (1 - o) * t
-                    #print "    Error for this node is", e
-                    r.append(e)
+                    r.append(outputs[i][j] * (1 - outputs[i][j]) * t)
                 error.insert(0, r)
-                #print "  Found error for layer", i, "is", error[0]
-        #print "Found error terms for all layers", error
         
-        #print "Teaching all layers"
         for l in range(len(self.layers)):
             if l == 0:
                 x = inputs
             else:
                 x = outputs[l - 1]
-            #print "  Teaching layer", l, "with input", x, "and error", error[l]
-            #print "  Layer now has numbers", self.layers[l].display()
             self.layers[l].learn(x, error[l])
-            #print "  Layer now has numbers", self.layers[l].display()
-        #print
 
     # calculate the final output based on an initial input set
     def calculate(self, inputs):
@@ -116,7 +93,7 @@ class Network:
 
 if __name__ == "__main__":
     def test():
-        network = Network(2, [2, 4], 0.1, 0.1)
+        network = Network(2, [4, 4], 0.1, 0.1)
     
         setSize = 1000
         dEvery = 100000
@@ -128,23 +105,23 @@ if __name__ == "__main__":
         classD = []
 
         for i in range(setSize):
-            x = uniform(0.0, 10.0)
-            y = uniform(0.0, 10.0)
+            x = uniform(-10.0, 10.0)
+            y = uniform(5.0, 10.0)
             classA.append([x, y])
          
         for i in range(setSize):
-            x = uniform(-10.0, 0.0)
-            y = uniform(0.0, 10.0)
+            x = uniform(-10.0, 10.0)
+            y = uniform(0.0, 4.999)
             classB.append([x, y])
          
         for i in range(setSize):
-            x = uniform(0.0, 10.0)
-            y = uniform(-10.0, 0.0)
+            x = uniform(-10.0, 10.0)
+            y = uniform(-5.0, -0.001)
             classC.append([x, y])
          
         for i in range(setSize):
-            x = uniform(-10.0, 0.0)
-            y = uniform(-10.0, 0.0)
+            x = uniform(-10.0, 10.0)
+            y = uniform(-10.0, -5.001)
             classD.append([x, y])
          
         tests = 4 * setSize
