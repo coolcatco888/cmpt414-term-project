@@ -7,8 +7,6 @@ import numpy as np
 class Neuron:
     """A simplified 'forgetful' neuron"""
     
-    #Initializes a neuron with these arguments
-    #It is strongly recomended that you set bGain to zero
     def __init__(self, inputs, gain, moment, r = [0.0, 1.0]):
         self.numInputs = inputs
         if len(r) != 2:
@@ -38,38 +36,28 @@ class Neuron:
         return self.moment
 
     def calculate(self, inputs):
-        #print "Neuron", self, "calculating", inputs
         if len(inputs) != len(self.weights):
             return 0.0
         
         s = 0.0
         for i in range(self.numInputs):
             s = s + self.weights[i] * inputs[i]
-            #print "    Running sum", s
         
-        #print "    Adding bias", self.bias
         s = s + self.bias
-        #print "    Sigmoid result", self.sigmoid(s)
         return self.sigmoid(s)
 
     def learn(self, inputs, error):
-        #print "Neuron", self, "learning for inputs", inputs, "with error", error
-        #print "    Old weights were", self.weights
         g = self.gain
         m = self.moment
         newWeights = [w + g * error * i + m * (w - o) for w, i, o in zip(self.weights, inputs, self.oldWeights)]
         self.oldWeights = self.weights
         self.weights = newWeights
-        #print "    New weights are", self.weights
-        #print "    Old bias was", self.bias
 
         newBias = self.bias + g * error + m * (self.bias - self.oldBias)
         self.oldBias = self.bias
         self.bias = newBias
-        #print "    New bias is", self.bias
 
     def sigmoid(self, x):
-        #print "Sigmoiding", x
         if x < -500.0:
             x = -500.0
         if x > 500.0:
