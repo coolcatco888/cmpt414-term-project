@@ -1,9 +1,11 @@
 import ocr
 import PythonMagick
+import image_utility
 
 #    #Here is an example of how to use Python Magick
 #    image = PythonMagick.Image("images/a.png")
 #    image.scale("100x100")
+#    image.pixelColor( 0, 0, "red" );
 #    image.display()
 #    print image.fileName()
 #    print image.magick()
@@ -46,3 +48,15 @@ if __name__ == "__main__":
     ocr.train()
 
 
+    #Here is an example of how to use Python Magick
+    image = PythonMagick.Image("images/a.png")
+    image_utility.set_color(image, 0, 0, 0, 0, 255)
+    image.scale("100x100")
+    image.display()
+
+    print image.fileName()
+    print image.magick()
+    print image.size().width()
+    print image.size().height()
+    print hex(255)
+    print hex(1)
