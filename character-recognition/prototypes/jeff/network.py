@@ -104,25 +104,43 @@ if __name__ == "__main__":
         classC = []
         classD = []
 
-        for i in range(setSize):
-            x = uniform(-10.0, 10.0)
-            y = uniform(5.0, 10.0)
-            classA.append([x, y])
+        while len(classA) < setSize:
+            x = uniform(-10.0, 0.0)
+            y = uniform(0.0, 10.0)
+            if -x < y:
+                classA.append([x,y])
          
-        for i in range(setSize):
-            x = uniform(-10.0, 10.0)
-            y = uniform(0.0, 4.999)
-            classB.append([x, y])
+        #for x, y in classA:
+            #plot.plot(x, y, 'ro')
+
+        while len(classB) < setSize:
+            x = uniform(-10.0, 0.0)
+            y = uniform(-10.0, 10.0)
+            if -x >= y:
+                classB.append([x, y])
          
-        for i in range(setSize):
-            x = uniform(-10.0, 10.0)
-            y = uniform(-5.0, -0.001)
-            classC.append([x, y])
+        #for x, y in classB:
+            #plot.plot(x, y, 'go')
+
+        while len(classC) < setSize:
+            x = uniform(0.0, 10.0)
+            y = uniform(0.0, 10.0)
+            if x < (3.0*y/10.0):
+                classC.append([x, y])
          
-        for i in range(setSize):
-            x = uniform(-10.0, 10.0)
-            y = uniform(-10.0, -5.001)
-            classD.append([x, y])
+        #for x, y in classC:
+            #plot.plot(x, y, 'bo')
+
+        while len(classD) < setSize:
+            x = uniform(0.0, 10.0)
+            y = uniform(-10.0, 10.0)
+            if x >= (3.0*y/10.0):
+                classD.append([x, y])
+
+        #for x, y in classD:
+            #plot.plot(x, y, 'yo')
+        #plot.axis([-10.0, 10.0, -10.0, 10.0])
+        #plot.show()
          
         tests = 4 * setSize
          
