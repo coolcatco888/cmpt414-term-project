@@ -6,8 +6,8 @@ def getSet(filename):
     result = []
     for l in f:
         splut = l.split(",")
-        splut = [int(s) for s in splut]
-        result.append((splut[0 : 64], splut[64]))
+        splut = [float(s) for s in splut]
+        result.append(([s / 16.0 for s in splut[0 : 64]], int(splut[64])))
 
     f.close()
     del f
@@ -15,7 +15,11 @@ def getSet(filename):
 
 train = getSet("datasets/optdigits.tra")
 
-network = Network(64, [40, 40, 10], 0.1, 0.1)
+dataSet = train[0 : 500]
+
+del train
+
+network = Network(64, [30, 20, 10], 0.1, 0.1)
 
 errors = 0.0
 acceptable = 0.01
@@ -27,12 +31,14 @@ converging = True
 
 countEvery = 100
 
-print "Data set is of size", len(train)
+tests = len(dataSet)
+
+print "Data set is of size", tests
 
 while errorRate >= acceptable and divergedFor < divergeFor:
     errors = 0.0
     j = 0
-    for data in train:
+    for data in dataSet:
         desired = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         if j % countEvery == 0:
             print j
@@ -52,12 +58,14 @@ while errorRate >= acceptable and divergedFor < divergeFor:
         binary[mi] = 1.0
         #print "Result was actually", actual, "and binarily", binary
         if desired != binary:
-            #print "Error: desired", desired, "is not binary", binary
+            print "Training with inputs", inputs, "and desired", desired
+            print "Result was actually", actual, "and binarily", binary
+            print "Error: desired", desired, "is not binary", binary
             errors = errors + 1.0
     oldError = errorRate
     print "Old error", oldError
-    errorRate = errors / float(len(train))
-    print "Errors", errors, "set size", len(train), "error rate", errorRate
+    errorRate = errors / float(tests)
+    print "Errors", errors, "set size", tests, "error rate", errorRate
     converging = errorRate < oldError
     if converging:
         divergedFor = 0
