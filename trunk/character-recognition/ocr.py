@@ -1,19 +1,30 @@
+import ocr
 import PythonMagick
 
-
-class ocr:
+#    #Here is an example of how to use Python Magick
+#    image = PythonMagick.Image("images/a.png")
+#    image.scale("100x100")
+#    image.display()
+#    print image.fileName()
+#    print image.magick()
+#    print image.size().width()
+#    print image.size().height()
+class OCR:
     training_image_names = []
     training_images = []
 
-    def __init__(self, training_images):
+    def __init__(self, training_image_names):
         self.training_image_names = training_image_names
-        self.__process_images_for_network()
-
+        self.__load_images()
+        self.__serialize_images()
         
-    def __process_images_for_network(self):
+    def __load_images(self):
         for image_name in self.training_image_names:
             img = PythonMagick.Image(image_name)
             self.training_images.append(img)
+        return
+
+    def __serialize_images(self):
         return
     
     def train(self):
@@ -26,13 +37,12 @@ if __name__ == "__main__":
 
     training_images = []
     training_images.append("images/a.png")
+    training_images.append("images/b.png")
+    training_images.append("images/c.png")
+    training_images.append("images/d.png")
+    training_images.append("images/e.png")
 
-    image = PythonMagick.Image("images/a.png")
-    image.scale("100x100")
-    image.display()
-    print image.fileName()
-    print image.magick()
-    print image.size().width()
-    print image.size().height()
+    ocr = OCR(training_images)
+    ocr.train()
 
 
