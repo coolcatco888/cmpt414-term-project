@@ -4,13 +4,16 @@ import image_utility
 
 #    #Here is an example of how to use Python Magick
 #    image = PythonMagick.Image("images/a.png")
+#    image_utility.set_color(image, 0, 0, 0, 0, 255)
 #    image.scale("100x100")
-#    image.pixelColor( 0, 0, "red" );
 #    image.display()
+#
 #    print image.fileName()
 #    print image.magick()
 #    print image.size().width()
 #    print image.size().height()
+#    print hex(255)
+#    print hex(1)
 class OCR:
     training_image_names = []
     training_images = []
@@ -47,16 +50,7 @@ if __name__ == "__main__":
     ocr = OCR(training_images)
     ocr.train()
 
-
-    #Here is an example of how to use Python Magick
     image = PythonMagick.Image("images/a.png")
-    image_utility.set_color(image, 0, 0, 0, 0, 255)
-    image.scale("100x100")
-    image.display()
-
-    print image.fileName()
-    print image.magick()
-    print image.size().width()
-    print image.size().height()
-    print hex(255)
-    print hex(1)
+    color = image.pixelColor(0,0).redQuantum()
+    print color
+    
