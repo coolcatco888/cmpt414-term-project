@@ -1,4 +1,4 @@
-import Magick
+import PythonMagick
 
 
 class ocr:
@@ -12,7 +12,7 @@ class ocr:
         
     def __process_images_for_network(self):
         for image_name in self.training_image_names:
-            img = Magick.read(image_name)
+            img = PythonMagick.Image(image_name)
             self.training_images.append(img)
         return
     
@@ -25,6 +25,14 @@ class ocr:
 if __name__ == "__main__":
 
     training_images = []
-    training_images.append("")
+    training_images.append("images/a.png")
 
-    return
+    image = PythonMagick.Image("images/a.png")
+    image.scale("100x100")
+    image.display()
+    print image.fileName()
+    print image.magick()
+    print image.size().width()
+    print image.size().height()
+
+
