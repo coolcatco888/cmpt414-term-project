@@ -27,7 +27,7 @@ class Network:
 
     def learn(self, inputs, desired):
         if len(inputs) != self.numInputs:
-            print "Number of inputs does not match network"
+            print "Number of inputs", len(inputs), "does not match network with", self.numInputs, "inputs"
             return 
         if len(desired) != self.layers[-1].getSize():
             print "Number of outputs does not match network"
