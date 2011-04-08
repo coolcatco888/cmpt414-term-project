@@ -31,9 +31,9 @@ print "Data set is of size", len(train)
 
 while errorRate >= acceptable and divergedFor < divergeFor:
     errors = 0.0
-    desired = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     j = 0
     for data in train:
+        desired = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         if j % countEvery == 0:
             print j
         j = j + 1
@@ -52,9 +52,12 @@ while errorRate >= acceptable and divergedFor < divergeFor:
         binary[mi] = 1.0
         #print "Result was actually", actual, "and binarily", binary
         if desired != binary:
+            #print "Error: desired", desired, "is not binary", binary
             errors = errors + 1.0
     oldError = errorRate
-    errorRate = errors / tests
+    print "Old error", oldError
+    errorRate = errors / float(len(train))
+    print "Errors", errors, "set size", len(train), "error rate", errorRate
     converging = errorRate < oldError
     if converging:
         divergedFor = 0
