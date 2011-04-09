@@ -40,6 +40,9 @@ class Trainer:
                 #Calculate outputs for this training set or class
                 y = self.network.calculate(input);
 
+                print "input: " + str(input)
+                print "output: " + str(y)
+
                 # Compute binary output for comparison
                 binary_y = [0.0 for out in y]
                 max_y = 0.0;

@@ -22,6 +22,7 @@ class OCR:
     training_images = []
     training_data = 0
     trainer = 0
+    network = 0
 
     def __init__(self, training_image_names):
         # training image names are relative location of images
@@ -58,6 +59,7 @@ class OCR:
         network = Network(25, [10, 10, len(self.training_images)], 0.1, 0.1)
         trainer = Trainer(training_data, network, 0.015, 1500)
         self.trainer = trainer
+        self.network = network
         return
 
     # This converts an image into a 1 dimentional binary string
@@ -90,10 +92,12 @@ class OCR:
 
     def test(self, image_name):
         # Input test image to the network
+        print "Testing Image:" + image_name
         image = PythonMagick.Image(image_name)
         input = self.__serialize_image(image)
-        output = self.trainer.test(input)
-        
+        output = self.network.calculate(input)
+
+        print "Testing Input: " + str(input)
         print "Testing Output: " + str(output)
 
 
@@ -108,7 +112,7 @@ class OCR:
         binary_output = [0.0 for i in range(len(output))]
         binary_output[image_index] = 1.0
 
-        print "Binary Output: " + str(binary_output)
+        print "Binary Output: " + str(binary_output) + "\n"
         return self.training_images[image_index]
 
 if __name__ == "__main__":
