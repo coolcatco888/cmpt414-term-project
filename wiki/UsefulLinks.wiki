@@ -27,3 +27,6 @@ Python Vision (Image Processing Library):
 
 GUI Building Python Glade:
 <br>http://www.learningpython.com/2006/05/07/creating-a-gui-using-pygtk-and-glade/
+
+Using Python Pickle:
+<br>http://python.about.com/od/pythonstandardlibrary/a/pickle_intro.htm
