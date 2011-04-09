@@ -104,7 +104,11 @@ class OCR:
             if output[i] > max_value:
                 max_value = output[i]
                 image_index = i
-                
+
+        binary_output = [0.0 for i in range(len(output))]
+        binary_output[image_index] = 1.0
+
+        print "Binary Output: " + str(binary_output)
         return self.training_images[image_index]
 
 if __name__ == "__main__":
@@ -118,6 +122,8 @@ if __name__ == "__main__":
 
     ocr = OCR(training_images)
     ocr.train()
+    image = ocr.test("images/a.png")
+    image = ocr.test("images/b.png")
     image = ocr.test("images/c.png")
     image.scale("200x200")
     image.display()
