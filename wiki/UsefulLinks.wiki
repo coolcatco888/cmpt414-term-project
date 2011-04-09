@@ -24,3 +24,6 @@ Back Propagation:
 
 Python Vision (Image Processing Library):
 <br>http://pythonvision.org/basic-tutorial
+
+GUI Building Python Glade:
+<br>http://www.learningpython.com/2006/05/07/creating-a-gui-using-pygtk-and-glade/
