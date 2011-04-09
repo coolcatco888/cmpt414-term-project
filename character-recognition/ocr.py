@@ -51,6 +51,7 @@ if __name__ == "__main__":
     ocr.train()
 
     image = PythonMagick.Image("images/a.png")
-    color = image.pixelColor(0,0).redQuantum()
-    print color
+    image_utility.set_color(image, 2, 2, 0, 0, 255)
+    [r, g, b] = image_utility.get_color(image, 2, 2)
+    print "b = " + str(b)
     

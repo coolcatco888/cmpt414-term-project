@@ -32,7 +32,7 @@ class Trainer:
 
         # Training Loop
         while error_rate >= self.acceptable_error_rate and diverge_count < self.max_allowable_diverges:
-            error_count = 0
+            error_count = 0.0
             # For each training set calculate desired outputs
             for desired_output, input in zip(d, x):
                 #Calculate outputs for this training set or class
