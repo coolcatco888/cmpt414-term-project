@@ -7,6 +7,9 @@ Here are links to reference material that we used in order to construct our proj
 
 = Links =
 
+Sample C# Source Code of Neural Network OCR:
+<br>http://www.codeproject.com/KB/cs/neural_network_ocr.aspx
+
 Sample C# Source Code of Simple OCR:
 <br>http://www.codeproject.com/KB/dotnet/simple_ocr.aspx
 
