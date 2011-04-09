@@ -65,9 +65,8 @@ class Trainer:
                 self.network.learn(input, desired_output)
 
                 # Count number of errors in output
-                for y, desired in zip(binary_y, binary_desired_output):
-                    if y != desired:
-                        error_count = error_count + 1.0
+                if binary_y != binary_desired_output:
+                    error_count = error_count + 1.0
 
             # Calculate error rate
             previous_error_rate = error_rate
