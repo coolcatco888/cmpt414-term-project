@@ -56,7 +56,7 @@ class OCR:
     def __initalize_network_and_trainer(self):
         training_data = self.training_data
         network = Network(25, [10, 10, 5], 0.1, 0.1)
-        trainer = Trainer(training_data, network, 0.015, 30)
+        trainer = Trainer(training_data, network, 0.015, 1500)
         self.trainer = trainer
         return
 
@@ -93,6 +93,9 @@ class OCR:
         image = PythonMagick.Image(image_name)
         input = self.__serialize_image(image)
         output = self.trainer.test(input)
+        
+        print "Testing Output: " + str(output)
+
 
         # Find max value out of output (most likely)
         max_value = 0.0
