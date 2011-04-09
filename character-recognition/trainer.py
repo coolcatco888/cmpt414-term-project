@@ -75,7 +75,7 @@ class Trainer:
 
         return
 
-    def test(self):
+    def test(self, inputs):
         return self.network.calculate(inputs)
 
     def get_network(self):
