@@ -56,7 +56,7 @@ class OCR:
 
     def __initalize_network_and_trainer(self):
         training_data = self.training_data
-        network = Network(25, [10, 10, len(self.training_images)], 0.1, 0.1)
+        network = Network(25, [len(self.training_images)], 0.1, 0.1)
         trainer = Trainer(training_data, network, 0.015, 1500)
         self.trainer = trainer
         self.network = network
@@ -77,9 +77,9 @@ class OCR:
                 # Round value to 1 or floor it
                 binary_pixel = gray_pixel
                 if binary_pixel > 0.5:
-                    binary_pixel = 1.0
+                    binary_pixel = 0.5
                 else:
-                    binary_pixel = 0.0
+                    binary_pixel = -0.5
 
                 # store in array
                 inputs.append(binary_pixel)
