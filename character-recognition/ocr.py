@@ -55,7 +55,7 @@ class OCR:
 
     def __initalize_network_and_trainer(self):
         training_data = self.training_data
-        network = Network(25, [10, 10, 5], 0.1, 0.1)
+        network = Network(25, [10, 10, len(self.training_images)], 0.1, 0.1)
         trainer = Trainer(training_data, network, 0.015, 1500)
         self.trainer = trainer
         return
