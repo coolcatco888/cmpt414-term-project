@@ -77,9 +77,9 @@ class OCR:
                 # Round value to 1 or floor it
                 binary_pixel = gray_pixel
                 if binary_pixel > 0.5:
-                    binary_pixel = 0.5
+                    binary_pixel = 0.1
                 else:
-                    binary_pixel = -0.5
+                    binary_pixel = 0.0
 
                 # store in array
                 inputs.append(binary_pixel)
