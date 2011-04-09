@@ -33,6 +33,8 @@ class Trainer:
         # Training Loop
         while error_rate >= self.acceptable_error_rate and diverge_count < self.max_allowable_diverges:
             error_count = 0.0
+
+            print "Training Iteration\n---------------------------"
             # For each training set calculate desired outputs
             for desired_output, input in zip(d, x):
                 #Calculate outputs for this training set or class
@@ -53,6 +55,9 @@ class Trainer:
                 # Compute binary desired output for comparison
                 binary_desired_output = [1.0 if (out > 0.0) else 0.0 for out in desired_output]
 
+                print "output  : " + str(binary_y)
+                print "desired : " + str(binary_desired_output) + "\n"
+
                 #Learn
                 self.network.learn(input, desired_output)
 
@@ -71,7 +76,7 @@ class Trainer:
                 is_converging = True
             diverge_count = 0.0 if is_converging else diverge_count + 1.0
 
-            print error_rate, "\t", previous_error_rate, "\t", is_converging
+            print "Error Rate: " + str(error_rate) +  "\tPrev Error: " +  str(previous_error_rate) +  "\tConverging: " + str(is_converging) + "\n"
 
         return
 
