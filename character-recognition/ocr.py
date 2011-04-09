@@ -85,10 +85,15 @@ class OCR:
                 inputs.append(binary_pixel)
                 
         return inputs
+
+    def get_network(self):
+        return self.network
+
+    def set_network(self, network):
+        self.network = network
     
     def train(self):
         self.trainer.train()
-        
 
     def test(self, image_name):
         # Input test image to the network
