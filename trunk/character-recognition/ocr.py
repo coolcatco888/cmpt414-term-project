@@ -4,6 +4,7 @@ import image_utility
 from training_data import TrainingData
 from network import Network
 from trainer import Trainer
+import pickle
 
 #    #Here is an example of how to use Python Magick
 #    image = PythonMagick.Image("images/a.png")
@@ -131,6 +132,14 @@ if __name__ == "__main__":
 
     ocr = OCR(training_images)
     ocr.train()
+
+    network = ocr.get_network()
+    filehandler = open("network.txt", 'w')
+    pickle.dump(network, filehandler)
+    filehandler = open("network.txt", 'r')
+    network = pickle.load(filehandler)
+    ocr.set_network(network)
+
     image = ocr.test("images/a.png")
     image = ocr.test("images/b.png")
     image = ocr.test("images/c.png")
