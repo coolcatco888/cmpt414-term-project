@@ -11,7 +11,8 @@ class  MainProgramGTK:
         filename = "main_menu.glade"
         builder = gtk.Builder()
         builder.add_from_file(filename)
-        builder.connect_signals(self)
+        signals = { "on_window_destroy" : gtk.main_quit }
+        builder.connect_signals(signals)
 
 if __name__ == "__main__":
     app = MainProgramGTK()
