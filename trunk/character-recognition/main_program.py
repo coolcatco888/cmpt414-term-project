@@ -56,25 +56,45 @@ class  MainProgramGTK:
         dialog = self.window
 
         if response == gtk.RESPONSE_OK:
+            file_name = dialog.get_filename()
             if label[:4] == "Load":
                 if label[5:] == "Image":
-                    self.testing_image = PythonMagick.Image(dialog.get_filename())
-                    self.__display_image(dialog.get_filename(), "testingImage")
+                    self.testing_image = PythonMagick.Image(file_name)
+                    self.__display_image(file_name, "testingImage")
                     self.window.hide()
                 elif label[5:] == "Network":
-                    filehandler = open(dialog.get_filename(), 'r')
+                    filehandler = open(file_name, 'r')
                     self.network = pickle.load(filehandler)
                 elif label[5:] == "Training Data":
-                    """"""
+                    filehandler = open(file_name, 'r')
+                    self.training_data = self.__create_training_image_list(filehandler.read())
+                    
             elif label[4:] == "Save":
-                if label[5:] == "Image":
-                    """"""
-                elif label[5:] == "Network":
-                    """"""
+                if label[5:] == "Network":
+                    self.__save_training_data(file_name)
                 elif label[5:] == "Training Data":
-                    """"""
+                    self.__save_training_data(file_name)
+                    
         elif response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
             self.window.hide()
+
+    def test_image(self):
+        return
+
+    def __create_training_image_list(self, str):
+        list = []
+        
+        for line in str.split():
+            list.append(line)
+
+        return list
+
+    def __save_training_data(self, file_name):
+        return
+
+    def __save_network(self, file_name):
+        return
+
     def __display_image(self, image_file, object_name):
         image = PythonMagick.Image(image_file)
         image.scale("100x100")
