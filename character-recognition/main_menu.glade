@@ -265,8 +265,23 @@
                 <signal name="clicked" handler="on_load_save_dialog_show"/>
               </object>
               <packing>
-                <property name="x">502</property>
-                <property name="y">105</property>
+                <property name="x">505</property>
+                <property name="y">71</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button7">
+                <property name="label" translatable="yes">Test Image</property>
+                <property name="width_request">100</property>
+                <property name="height_request">40</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image_position">right</property>
+              </object>
+              <packing>
+                <property name="x">505</property>
+                <property name="y">133</property>
               </packing>
             </child>
           </object>
@@ -366,5 +381,9 @@ Jeff Hunter</property>
       <action-widget response="-6">loadSaveButtonCancel</action-widget>
       <action-widget response="-5">loadSaveButton</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="stock">gtk-missing-image</property>
   </object>
 </interface>
