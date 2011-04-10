@@ -5,6 +5,9 @@ __date__ ="$9-Apr-2011 5:07:40 PM$"
 
 import gtk
 
+TEXT_LOAD = "Load"
+TEXT_SAVE = "Save"
+
 class  MainProgramGTK:
 
     builder = 0
@@ -19,7 +22,8 @@ class  MainProgramGTK:
         # Bind functions to GUI
         signals = {
             "on_window_destroy" : gtk.main_quit,
-            "on_about_show" : self.about_show
+            "on_about_show" : self.about_show,
+            "on_load_network" : self.load_network
         }
         builder.connect_signals(signals)
         self.builder = builder
@@ -31,6 +35,14 @@ class  MainProgramGTK:
     def about_show(self, widget):
         self.window = self.builder.get_object("aboutdialog")
 	response = self.window.run()
+
+        if response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
+            self.window.hide()
+
+    def load_network(self, widget):
+        self.window = self.builder.get_object("filechooserdialog")
+        self.window.set_title("Choose Neural Network...")
+        response = self.window.run()
 
         if response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
             self.window.hide()
