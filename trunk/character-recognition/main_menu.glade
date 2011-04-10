@@ -115,7 +115,7 @@
             </child>
             <child>
               <object class="GtkHSeparator" id="hseparator2">
-                <property name="width_request">691</property>
+                <property name="width_request">698</property>
                 <property name="height_request">20</property>
                 <property name="visible">True</property>
               </object>
@@ -125,7 +125,7 @@
             </child>
             <child>
               <object class="GtkTextView" id="textview1">
-                <property name="width_request">258</property>
+                <property name="width_request">362</property>
                 <property name="height_request">98</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -145,8 +145,8 @@
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="x">370</property>
-                <property name="y">440</property>
+                <property name="x">442</property>
+                <property name="y">438</property>
               </packing>
             </child>
             <child>
@@ -159,8 +159,8 @@
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="x">370</property>
-                <property name="y">392</property>
+                <property name="x">442</property>
+                <property name="y">390</property>
               </packing>
             </child>
             <child>
@@ -187,8 +187,8 @@
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="x">406</property>
-                <property name="y">282</property>
+                <property name="x">464</property>
+                <property name="y">277</property>
               </packing>
             </child>
             <child>
@@ -201,28 +201,70 @@
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="x">235</property>
-                <property name="y">282</property>
+                <property name="x">269</property>
+                <property name="y">279</property>
               </packing>
             </child>
             <child>
-              <object class="GtkHBox" id="hbox1">
-                <property name="width_request">695</property>
-                <property name="height_request">206</property>
+              <object class="GtkLabel" id="label4">
+                <property name="width_request">100</property>
+                <property name="height_request">30</property>
                 <property name="visible">True</property>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
+                <property name="label" translatable="yes">Testing Image</property>
               </object>
               <packing>
-                <property name="x">4</property>
-                <property name="y">20</property>
+                <property name="x">112</property>
+                <property name="y">30</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label5">
+                <property name="width_request">100</property>
+                <property name="height_request">30</property>
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Matched Image</property>
+              </object>
+              <packing>
+                <property name="x">317</property>
+                <property name="y">30</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkImage" id="image1">
+                <property name="width_request">150</property>
+                <property name="height_request">150</property>
+                <property name="visible">True</property>
+                <property name="stock">gtk-missing-image</property>
+              </object>
+              <packing>
+                <property name="x">83</property>
+                <property name="y">60</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkImage" id="image2">
+                <property name="width_request">150</property>
+                <property name="height_request">150</property>
+                <property name="visible">True</property>
+                <property name="stock">gtk-missing-image</property>
+              </object>
+              <packing>
+                <property name="x">291</property>
+                <property name="y">60</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button6">
+                <property name="label" translatable="yes">Load Image</property>
+                <property name="width_request">100</property>
+                <property name="height_request">40</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="x">502</property>
+                <property name="y">105</property>
               </packing>
             </child>
           </object>
