@@ -61,10 +61,11 @@ class  MainProgramGTK:
                 if label[5:] == "Image":
                     self.testing_image = PythonMagick.Image(file_name)
                     self.__display_image(file_name, "testingImage")
-                    self.window.hide()
+                    
                 elif label[5:] == "Network":
                     filehandler = open(file_name, 'r')
                     self.network = pickle.load(filehandler)
+
                 elif label[5:] == "Training Data":
                     filehandler = open(file_name, 'r')
                     self.training_data = self.__create_training_image_list(filehandler.read())
@@ -72,8 +73,10 @@ class  MainProgramGTK:
             elif label[4:] == "Save":
                 if label[5:] == "Network":
                     self.__save_training_data(file_name)
+
                 elif label[5:] == "Training Data":
                     self.__save_training_data(file_name)
+            self.window.hide()
                     
         elif response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
             self.window.hide()
