@@ -12,8 +12,9 @@ TEXT_SAVE = "Save"
 class  MainProgramGTK:
 
     builder = 0
-    image_file = 0
-    network_file = 0
+    testing_image = 0
+    network = 0
+    training_data = 0
 
     def __init__(self):
 
@@ -57,12 +58,20 @@ class  MainProgramGTK:
         if response == gtk.RESPONSE_OK:
             if label[:4] == "Load":
                 if label[5:] == "Image":
+                    self.testing_image = PythonMagick.Image(dialog.get_filename())
                     self.__display_image(dialog.get_filename(), "testingImage")
                     self.window.hide()
                 elif label[5:] == "Network":
-                    self.network_file = dialog.get_filename()
-
+                    filehandler = open(dialog.get_filename(), 'r')
+                    self.network = pickle.load(filehandler)
+                elif label[5:] == "Training Data":
+                    """"""
             elif label[4:] == "Save":
+                if label[5:] == "Image":
+                    """"""
+                elif label[5:] == "Network":
+                    """"""
+                elif label[5:] == "Training Data":
                     """"""
         elif response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
             self.window.hide()
