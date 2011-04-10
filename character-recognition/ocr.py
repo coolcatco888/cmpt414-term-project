@@ -19,21 +19,22 @@ import pickle
 #    print hex(255)
 #    print hex(1)
 class OCR:
-    training_image_names = []
+
     training_images = []
     training_data = 0
     trainer = 0
     network = 0
 
-    def __init__(self, training_image_names):
-        # training image names are relative location of images
-        self.training_image_names = training_image_names
-        self.__load_images()
-        self.__create_training_data()
-        self.__initalize_network_and_trainer()
+    def __init__(self):
+        """"""
         
-    def __load_images(self):
-        for image_name in self.training_image_names:
+
+    def load_training_images(self, training_image_names):
+        self.__load_images(training_image_names)
+        self.__create_training_data()
+        
+    def __load_images(self, training_image_names):
+        for image_name in training_image_names:
             # create python magick image
             image = PythonMagick.Image(image_name)
 
@@ -55,13 +56,21 @@ class OCR:
         self.training_data = training_data
         return
 
-    def __initalize_network_and_trainer(self):
-        training_data = self.training_data
+    def initialize_network(self):
         network = Network(25, [len(self.training_images)], 0.1, 0.1)
+        self.network = network
+
+    def initalize_trainer(self):
+        training_data = self.training_data
+        network = self.network
         trainer = Trainer(training_data, network, 0.015, 1500)
         self.trainer = trainer
-        self.network = network
-        return
+
+    def initalize_network_and_trainer(self):
+        self.initialize_network()
+        self.initalize_trainer()
+        
+        
 
     # This converts an image into a 1 dimentional binary string
     def __serialize_image(self, image):
@@ -130,7 +139,9 @@ if __name__ == "__main__":
     training_images.append("images/d.png")
     training_images.append("images/e.png")
 
-    ocr = OCR(training_images)
+    ocr = OCR()
+    ocr.load_training_images(training_images)
+    ocr.initalize_network_and_trainer()
     ocr.train()
 
     network = ocr.get_network()

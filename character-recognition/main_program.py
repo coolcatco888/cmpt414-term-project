@@ -5,6 +5,8 @@ __date__ ="$9-Apr-2011 5:07:40 PM$"
 
 import gtk
 import PythonMagick
+import pickle
+from ocr import OCR
 
 TEXT_LOAD = "Load"
 TEXT_SAVE = "Save"
@@ -50,10 +52,17 @@ class  MainProgramGTK:
         button.set_label(label)
         
         self.window = self.builder.get_object("filechooserdialog")
+        dialog = self.window
         self.window.set_title(label + "...")
+        
+        if label[:4] == "Load":
+            dialog.set_action(gtk.FILE_CHOOSER_ACTION_OPEN)
+        else:
+            dialog.set_action(gtk.FILE_CHOOSER_ACTION_SAVE)
+
         response = self.window.run()
 
-        dialog = self.window
+        
 
         if response == gtk.RESPONSE_OK:
             file_name = dialog.get_filename()
@@ -71,6 +80,7 @@ class  MainProgramGTK:
                     self.training_data = self.__create_training_image_list(filehandler.read())
                     
             elif label[4:] == "Save":
+                
                 if label[5:] == "Network":
                     self.__save_training_data(file_name)
 
@@ -82,6 +92,7 @@ class  MainProgramGTK:
             self.window.hide()
 
     def test_image(self):
+
         return
 
     def __create_training_image_list(self, str):
