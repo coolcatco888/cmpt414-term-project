@@ -1,3 +1,4 @@
+import ocr
 # Main entry point into program
 
 __author__="cley"
@@ -29,7 +30,8 @@ class  MainProgramGTK:
         signals = {
             "on_window_destroy" : gtk.main_quit,
             "on_about_show" : self.about_show,
-            "on_load_save_dialog_show" : self.load_save_dialog_show
+            "on_load_save_dialog_show" : self.load_save_dialog_show,
+            "on_test_image" : self.test_image
         }
         builder.connect_signals(signals)
         self.builder = builder
@@ -68,7 +70,7 @@ class  MainProgramGTK:
             file_name = dialog.get_filename()
             if label[:4] == "Load":
                 if label[5:] == "Image":
-                    self.testing_image = PythonMagick.Image(file_name)
+                    self.testing_image = file_name
                     self.__display_image(file_name, "testingImage")
                     
                 elif label[5:] == "Network":
@@ -91,8 +93,17 @@ class  MainProgramGTK:
         elif response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
             self.window.hide()
 
-    def test_image(self):
+    def test_image(self, widget):
+        ocr = OCR()
+        
+        ocr.set_network(self.network)
+        ocr.load_training_images(self.training_data)
 
+        if self.testing_image != 0 and self.network != 0 and self.training_data != 0:
+            print self.testing_image
+            image = ocr.test(self.testing_image)
+            image.write("matched_image.png")
+            self.__display_image("matched_image.png", "matchedImage")
         return
 
     def __create_training_image_list(self, str):

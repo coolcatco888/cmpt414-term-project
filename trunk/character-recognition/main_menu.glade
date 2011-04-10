@@ -282,6 +282,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="image_position">right</property>
+                <signal name="clicked" handler="on_test_image"/>
               </object>
               <packing>
                 <property name="x">505</property>
