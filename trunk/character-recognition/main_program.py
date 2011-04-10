@@ -24,6 +24,9 @@ class  MainProgramGTK:
         builder.connect_signals(signals)
         self.builder = builder
 
+        self.window = self.builder.get_object("mainWindow")
+        self.window.set_title("OCR Neural Network")
+
 
     def about_show(self, widget):
         self.window = self.builder.get_object("aboutdialog")
