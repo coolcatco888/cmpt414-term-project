@@ -5,68 +5,53 @@
   <object class="GtkWindow" id="mainWindow">
     <property name="visible">True</property>
     <child>
-      <object class="GtkVPaned" id="vpaned1">
-        <property name="width_request">200</property>
-        <property name="height_request">200</property>
+      <object class="GtkVPaned" id="vpaned2">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <child>
-          <object class="GtkVPaned" id="vpaned2">
+          <object class="GtkMenuBar" id="menubar1">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
             <child>
-              <object class="GtkMenuBar" id="menubar1">
+              <object class="GtkMenuItem" id="fileMenuItem">
                 <property name="visible">True</property>
-                <child>
-                  <object class="GtkMenuItem" id="fileMenuItem">
+                <property name="label" translatable="yes">_File</property>
+                <property name="use_underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="fileMenu">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">_File</property>
-                    <property name="use_underline">True</property>
-                    <child type="submenu">
-                      <object class="GtkMenu" id="fileMenu">
+                    <child>
+                      <object class="GtkImageMenuItem" id="quitMenuItem">
+                        <property name="label">gtk-quit</property>
                         <property name="visible">True</property>
-                        <child>
-                          <object class="GtkImageMenuItem" id="quitMenuItem">
-                            <property name="label">gtk-quit</property>
-                            <property name="visible">True</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
-                            <signal name="activate" handler="on_window_destroy"/>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkMenuItem" id="helpMenuItem">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">_Help</property>
-                    <property name="use_underline">True</property>
-                    <child type="submenu">
-                      <object class="GtkMenu" id="helpMenu">
-                        <property name="visible">True</property>
-                        <child>
-                          <object class="GtkImageMenuItem" id="abouMenuItem">
-                            <property name="label">gtk-about</property>
-                            <property name="visible">True</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
-                            <signal name="activate" handler="on_about_show"/>
-                          </object>
-                        </child>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_window_destroy"/>
                       </object>
                     </child>
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="resize">False</property>
-                <property name="shrink">True</property>
-              </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkMenuItem" id="helpMenuItem">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">_Help</property>
+                <property name="use_underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="helpMenu">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkImageMenuItem" id="abouMenuItem">
+                        <property name="label">gtk-about</property>
+                        <property name="visible">True</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_about_show"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
             </child>
           </object>
           <packing>
@@ -75,7 +60,47 @@
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkFixed" id="fixed1">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="width_request">100</property>
+                <property name="height_request">20</property>
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">&lt;b&gt;Training Data&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="x">1</property>
+                <property name="y">305</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label2">
+                <property name="width_request">58</property>
+                <property name="height_request">20</property>
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">&lt;b&gt;Testing&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label3">
+                <property name="width_request">146</property>
+                <property name="height_request">20</property>
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">&lt;b&gt;Configure Network&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="y">150</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="resize">True</property>
+            <property name="shrink">True</property>
+          </packing>
         </child>
       </object>
     </child>
