@@ -1,4 +1,3 @@
-import ocr
 # Main entry point into program
 
 __author__="cley"

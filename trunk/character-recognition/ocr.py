@@ -39,7 +39,7 @@ class OCR:
             image = PythonMagick.Image(image_name)
 
             # scale the image
-            image.scale("5x5")
+            image = image_utility.resize(image, 5, 5)
             self.training_images.append(image)
         return
 
@@ -107,8 +107,10 @@ class OCR:
 
     def test(self, image_name):
         # Input test image to the network
-        print "Testing Image:" + image_name
+        print "Testing Image: " + image_name
         image = PythonMagick.Image(image_name)
+        image = image_utility.resize(image, 5, 5)
+        print "Size: " + str(image.size().width()) + "x" + str(image.size().height())
         input = self.__serialize_image(image)
         output = self.network.calculate(input)
 
