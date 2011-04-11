@@ -34,14 +34,16 @@ class OCR:
         self.__create_training_data()
         
     def __load_images(self, training_image_names):
+        training_images = []
         for image_name in training_image_names:
             # create python magick image
             image = PythonMagick.Image(image_name)
 
             # scale the image
             image = image_utility.resize(image, 5, 5)
-            self.training_images.append(image)
-        return
+            training_images.append(image)
+
+        self.training_images = training_images
 
     def __create_training_data(self):
         training_data = TrainingData()
