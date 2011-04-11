@@ -79,10 +79,12 @@ class  MainProgramGTK:
                 if label[5:] == "Image":
                     self.testing_image = file_name
                     self.__display_image(file_name, "testingImage")
+                    self.__check_step_display(3)
                     
                 elif label[5:] == "Network":
                     filehandler = open(file_name, 'r')
                     self.network = pickle.load(filehandler)
+                    self.__check_step_display(2)
 
                 elif label[5:] == "Training Data":
                     filehandler = open(file_name, 'r')
@@ -102,7 +104,8 @@ class  MainProgramGTK:
 
     def test_image(self, widget):
         ocr = OCR()
-        
+        training_data_text = self.__get_user_training_input()
+        self.training_data = self.__create_training_image_list(training_data_text)
         ocr.set_network(self.network)
         ocr.load_training_images(self.training_data)
 
@@ -153,13 +156,17 @@ class  MainProgramGTK:
         # Train network
         ocr.initalize_trainer()
         ocr.train()
+        self.__check_step_display(2)
 
     def __get_user_training_input(self):
         textview = self.builder.get_object("trainingDataTextView")
         buffer = textview.get_buffer()
         return buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
 
-
+    def __check_step_display(self, step):
+        object_name = "step" + str(step)
+        testing_image_display = self.builder.get_object(object_name)
+        testing_image_display.set_from_stock(gtk.STOCK_YES, gtk.ICON_SIZE_SMALL_TOOLBAR)
 
     def __display_image(self, image_file, object_name):
         image = PythonMagick.Image(image_file)
