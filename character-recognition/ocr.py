@@ -26,12 +26,16 @@ class OCR:
     network = 0
 
     def __init__(self):
-        """"""
+        self.training_images = []
+        self.training_data = 0
+        self.trainer = 0
+        self.network = 0
+
         
 
     def load_training_images(self, training_image_names):
         self.__load_images(training_image_names)
-        self.__create_training_data()
+        self.training_data = self.__create_training_data()
         
     def __load_images(self, training_image_names):
         training_images = []
@@ -55,8 +59,8 @@ class OCR:
             training_data.add_dataset(x, d)
             i = i + 1
 
-        self.training_data = training_data
-        return
+        return training_data
+        
 
     def initialize_network(self):
         network = Network(25, [len(self.training_images)], 0.1, 0.1)

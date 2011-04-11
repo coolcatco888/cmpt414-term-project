@@ -10,6 +10,8 @@ class TrainingData:
 
     def __init__(self):
         """Construct Training Data"""
+        self.x = []
+        self.d = []
 
     def get_data(self):
         return [self.x, self.d]
