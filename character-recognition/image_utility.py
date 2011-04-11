@@ -1,4 +1,6 @@
 # Image utility functions
+import PythonMagick
+
 
 # image - PythonMagickImage
 # x - x coordinate of pixel
@@ -41,3 +43,10 @@ def format_hex_number(hex_number):
         number = "0" + number
 
     return number
+
+# Credit to ftp://ftp.imagemagick.org/pub/ImageMagick/python/README.txt
+def resize(image, w, h):
+    image = PythonMagick.Image(image) # copy
+    size = "!%sx%s" % (w, h)
+    image.sample(size)
+    return image
