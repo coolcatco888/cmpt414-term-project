@@ -103,11 +103,7 @@ class  MainProgramGTK:
             self.window.hide()
 
     def test_image(self, widget):
-        ocr = OCR()
-        training_data_text = self.__get_user_training_input()
-        self.training_data = self.__create_training_image_list(training_data_text)
-        ocr.set_network(self.network)
-        ocr.load_training_images(self.training_data)
+        ocr = self.__setup_ocr_for_training_and_testing()
 
         if self.testing_image != 0 and self.network != 0 and self.training_data != 0:
             print self.testing_image
@@ -139,7 +135,16 @@ class  MainProgramGTK:
         
 
     def train_network(self, widget):
+
         # Setup OCR for training
+        ocr = self.__setup_ocr_for_training_and_testing()
+        
+        # Train network
+        ocr.initalize_trainer()
+        ocr.train()
+        self.__check_step_display(2)
+
+    def __setup_ocr_for_training_and_testing(self):
         ocr = OCR()
 
         # Get Training data from user input
@@ -152,13 +157,11 @@ class  MainProgramGTK:
             ocr.initialize_network()
             self.network = ocr.get_network()
         ocr.set_network(self.network)
-        
-        # Train network
-        ocr.initalize_trainer()
-        ocr.train()
-        self.__check_step_display(2)
+
+        return ocr
 
     def __get_user_training_input(self):
+
         textview = self.builder.get_object("trainingDataTextView")
         buffer = textview.get_buffer()
         return buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
