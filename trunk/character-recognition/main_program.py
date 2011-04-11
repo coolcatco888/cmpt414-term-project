@@ -17,6 +17,7 @@ class  MainProgramGTK:
     testing_image = 0
     network = 0
     training_data = 0
+    output_size = 0
 
     def __init__(self):
 
@@ -151,11 +152,15 @@ class  MainProgramGTK:
         training_data_text = self.__get_user_training_input()
         self.training_data = self.__create_training_image_list(training_data_text)
         ocr.load_training_images(self.training_data)
+        
+        output_size = len(self.training_data)
 
         # initialize network
-        if self.network == 0:
+        if self.network == 0 or self.output_size != output_size:
             ocr.initialize_network()
             self.network = ocr.get_network()
+            self.output_size = output_size
+
         ocr.set_network(self.network)
 
         return ocr
