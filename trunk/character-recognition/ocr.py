@@ -69,7 +69,7 @@ class OCR:
     def initalize_trainer(self):
         training_data = self.training_data
         network = self.network
-        trainer = Trainer(training_data, network, 0.015, 1500)
+        trainer = Trainer(training_data, network, 0.0005, 1500)
         self.trainer = trainer
 
     def initalize_network_and_trainer(self):
