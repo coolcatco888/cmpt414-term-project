@@ -124,18 +124,6 @@
               </packing>
             </child>
             <child>
-              <object class="GtkTextView" id="textview1">
-                <property name="width_request">362</property>
-                <property name="height_request">98</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-              </object>
-              <packing>
-                <property name="x">46</property>
-                <property name="y">386</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkButton" id="button1">
                 <property name="label" translatable="yes">Save Training Data</property>
                 <property name="width_request">175</property>
@@ -173,10 +161,11 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_train_network"/>
               </object>
               <packing>
-                <property name="x">62</property>
-                <property name="y">282</property>
+                <property name="x">60</property>
+                <property name="y">280</property>
               </packing>
             </child>
             <child>
@@ -190,8 +179,8 @@
                 <signal name="clicked" handler="on_load_save_dialog_show"/>
               </object>
               <packing>
-                <property name="x">464</property>
-                <property name="y">277</property>
+                <property name="x">460</property>
+                <property name="y">280</property>
               </packing>
             </child>
             <child>
@@ -205,8 +194,8 @@
                 <signal name="clicked" handler="on_load_save_dialog_show"/>
               </object>
               <packing>
-                <property name="x">269</property>
-                <property name="y">279</property>
+                <property name="x">260</property>
+                <property name="y">280</property>
               </packing>
             </child>
             <child>
@@ -223,7 +212,7 @@
             </child>
             <child>
               <object class="GtkLabel" id="label5">
-                <property name="width_request">100</property>
+                <property name="width_request">111</property>
                 <property name="height_request">30</property>
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Matched Image</property>
@@ -287,6 +276,103 @@
               <packing>
                 <property name="x">505</property>
                 <property name="y">133</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkImage" id="isTrainingDataCreated">
+                <property name="width_request">20</property>
+                <property name="height_request">20</property>
+                <property name="visible">True</property>
+                <property name="stock">gtk-yes</property>
+              </object>
+              <packing>
+                <property name="x">40</property>
+                <property name="y">205</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label6">
+                <property name="width_request">173</property>
+                <property name="height_request">23</property>
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">1. Create Training Data</property>
+              </object>
+              <packing>
+                <property name="x">71</property>
+                <property name="y">206</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkImage" id="isNetworkTrained">
+                <property name="width_request">20</property>
+                <property name="height_request">20</property>
+                <property name="visible">True</property>
+                <property name="stock">gtk-no</property>
+              </object>
+              <packing>
+                <property name="x">241</property>
+                <property name="y">205</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkImage" id="isImageLoaded">
+                <property name="width_request">20</property>
+                <property name="height_request">20</property>
+                <property name="visible">True</property>
+                <property name="stock">gtk-no</property>
+              </object>
+              <packing>
+                <property name="x">406</property>
+                <property name="y">206</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label7">
+                <property name="width_request">122</property>
+                <property name="height_request">22</property>
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">2. Train Network</property>
+              </object>
+              <packing>
+                <property name="x">273</property>
+                <property name="y">206</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label8">
+                <property name="width_request">159</property>
+                <property name="height_request">22</property>
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">3. Load Testing Image</property>
+              </object>
+              <packing>
+                <property name="x">442</property>
+                <property name="y">205</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolledwindow1">
+                <property name="width_request">362</property>
+                <property name="height_request">100</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">automatic</property>
+                <property name="vscrollbar_policy">automatic</property>
+                <child>
+                  <object class="GtkTextView" id="trainingDataTextView">
+                    <property name="width_request">362</property>
+                    <property name="height_request">98</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="x">40</property>
+                <property name="y">380</property>
               </packing>
             </child>
           </object>

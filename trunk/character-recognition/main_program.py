@@ -31,13 +31,21 @@ class  MainProgramGTK:
             "on_window_destroy" : gtk.main_quit,
             "on_about_show" : self.about_show,
             "on_load_save_dialog_show" : self.load_save_dialog_show,
-            "on_test_image" : self.test_image
+            "on_test_image" : self.test_image,
+            "on_train_network" : self.train_network
         }
         builder.connect_signals(signals)
         self.builder = builder
 
         self.window = self.builder.get_object("mainWindow")
         self.window.set_title("OCR Neural Network")
+
+        textview = self.builder.get_object("trainingDataTextView")
+        buffer = gtk.TextBuffer()
+        buffer.set_text("images/a.png\nimages/b.png\nimages/c.png\nimages/d.png\nimages/e.png")
+        textview.set_buffer(buffer)
+     
+
 
 
     def about_show(self, widget):
@@ -81,10 +89,10 @@ class  MainProgramGTK:
                     filehandler = open(file_name, 'r')
                     self.training_data = self.__create_training_image_list(filehandler.read())
                     
-            elif label[4:] == "Save":
+            elif label[:4] == "Save":
                 
                 if label[5:] == "Network":
-                    self.__save_training_data(file_name)
+                    self.__save_network(file_name)
 
                 elif label[5:] == "Training Data":
                     self.__save_training_data(file_name)
@@ -115,10 +123,44 @@ class  MainProgramGTK:
         return list
 
     def __save_training_data(self, file_name):
-        return
+        filehandler = open(file_name, 'w')
+        text = self.__get_user_training_input()
+        filehandler.write(text)
 
     def __save_network(self, file_name):
-        return
+        filehandler = open(file_name, 'w')
+
+        if self.network != 0:
+            pickle.dump(self.network, filehandler)
+        else:
+            """"""
+        
+
+    def train_network(self, widget):
+        # Setup OCR for training
+        ocr = OCR()
+
+        # Get Training data from user input
+        training_data_text = self.__get_user_training_input()
+        self.training_data = self.__create_training_image_list(training_data_text)
+        ocr.load_training_images(self.training_data)
+
+        # initialize network
+        if self.network == 0:
+            ocr.initialize_network()
+            self.network = ocr.get_network()
+        ocr.set_network(self.network)
+        
+        # Train network
+        ocr.initalize_trainer()
+        ocr.train()
+
+    def __get_user_training_input(self):
+        textview = self.builder.get_object("trainingDataTextView")
+        buffer = textview.get_buffer()
+        return buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
+
+
 
     def __display_image(self, image_file, object_name):
         image = PythonMagick.Image(image_file)
